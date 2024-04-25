@@ -1,0 +1,2451 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Modeling the problem as a Relaxed Integer Problem &#8212; Hospital Management</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Relaxed_Integer_Problem';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Dimensionality analysis" href="Dimensionality_Analysis.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Hospital Management - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Hospital Management - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Hospital Management
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Linear_Problem.html"><strong>Modeling the problem as a Linear Problem</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integer_Problem.html"><strong>Modeling the problem as an Integer Problem</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Dimensionality_Analysis.html"><strong>Dimensionality analysis</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Modeling the problem as a Relaxed Integer Problem</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Hospital_Management" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Hospital_Management/issues/new?title=Issue%20on%20page%20%2FRelaxed_Integer_Problem.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Relaxed_Integer_Problem.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Modeling the problem as a Relaxed Integer Problem</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaxed-integer-problem"><strong>Relaxed integer problem</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-the-integer-not-relaxed-model"><strong>Comparison with the integer (not relaxed) model</strong></a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="modeling-the-problem-as-a-relaxed-integer-problem">
+<h1><strong>Modeling the problem as a Relaxed Integer Problem</strong><a class="headerlink" href="#modeling-the-problem-as-a-relaxed-integer-problem" title="Link to this heading">#</a></h1>
+<section id="relaxed-integer-problem">
+<h2><strong>Relaxed integer problem</strong><a class="headerlink" href="#relaxed-integer-problem" title="Link to this heading">#</a></h2>
+<p>The following code is the same used for the integer problem with the exception that we have relaxed the binary variable  <span class="math notranslate nohighlight">\(y_j\)</span> to allow it to take non-negative real numbers, so, it is not a binary variable anymore.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">hospital_relaxed_integer_model</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="n">h3_1_2</span><span class="p">,</span> <span class="n">h3_3_4</span><span class="p">,</span> <span class="n">h3_5_6</span><span class="p">,</span> <span class="n">h3_7_8</span><span class="p">,</span> <span class="n">h3_9_10</span><span class="p">,</span> <span class="n">h4</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Implements and solves the hospital integer (binary) model.</span>
+
+<span class="sd">    Parameters (inputs)</span>
+<span class="sd">    ----------</span>
+<span class="sd">    n: number of nurse-doctor tandems in a given day.</span>
+<span class="sd">    p: number of patients tandems in a given day.</span>
+<span class="sd">    w: 1-D array with the severity/importance of the patients.</span>
+<span class="sd">    h1: maximum time seeing patients per nurse-doctor tandem in a given day.</span>
+<span class="sd">    h2: maximum time spent by nurse-doctor tandem i seeing the patient j, for all i,j.</span>
+<span class="sd">    h3_1_2: minimum time time spent in patient j, if w[j] in [1,2].</span>
+<span class="sd">    h3_3_4: minimum time time spent in patient j, if w[j] in [3,4].</span>
+<span class="sd">    h3_5_6: minimum time time spent in patient j, if w[j] in [5,6].</span>
+<span class="sd">    h3_7_8: minimum time time spent in patient j, if w[j] in [7,8].</span>
+<span class="sd">    h3_9_10: minimum time time spent in patient j, if w[j] in [9,10].</span>
+<span class="sd">    h4: maximum time time spent in patient j.</span>
+
+<span class="sd">    Returns (outputs)</span>
+<span class="sd">    -------</span>
+<span class="sd">    model: the Pyomo model output.</span>
+<span class="sd">    t_optimal: a dictionary with the optimal values for the t_ij decision variables.</span>
+<span class="sd">    y_optimal: a dictionary with the optimal values for the y_j decision variables.</span>
+<span class="sd">    f_optimal: the optimal value of the objective function.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+
+    <span class="c1"># Defining h3 function.</span>
+    <span class="k">def</span> <span class="nf">h3</span><span class="p">(</span><span class="n">w</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">]</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="n">h3_1_2</span>
+        <span class="k">if</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="n">h3_3_4</span>
+        <span class="k">elif</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="n">h3_5_6</span>
+        <span class="k">elif</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">]</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="n">h3_7_8</span>
+        <span class="k">elif</span> <span class="n">w</span> <span class="ow">in</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span> <span class="p">:</span>
+           <span class="k">return</span> <span class="n">h3_9_10</span>
+
+    <span class="c1"># Initialize a model.</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">ConcreteModel</span><span class="p">()</span>
+
+    <span class="c1"># Initialize ranges for tandems and patients.</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">N</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">P</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">)</span>
+
+    <span class="c1"># Defining t_ij decision variables as non-negative reals (t_ij &gt;= 0).</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">t</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span> 
+
+    <span class="c1"># Defining y_j as as non-negative real (y_j &gt;= 0).</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">y</span> <span class="o">=</span> <span class="n">Var</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">,</span> <span class="n">domain</span><span class="o">=</span><span class="n">NonNegativeReals</span><span class="p">)</span>
+
+    <span class="c1"># Objective function to maximize the weighted sum of time spent with patients</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">cost</span> <span class="o">=</span> <span class="n">Objective</span><span class="p">(</span><span class="n">expr</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">),</span> <span class="n">sense</span><span class="o">=</span><span class="n">maximize</span><span class="p">)</span>
+
+    <span class="c1"># Constraints</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">constraints</span> <span class="o">=</span> <span class="n">ConstraintList</span><span class="p">()</span>
+
+    <span class="c1"># The total time spent by each tandem on all patients must be at most h1.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">h1</span><span class="p">)</span>
+
+    <span class="c1"># The time spent by tandem i on patient j must be at most h2.</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">:</span>
+        <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">:</span>
+            <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="n">h2</span><span class="p">)</span>
+    
+    <span class="c1"># The total time a patient is seen by all tandems must be at least h3(w[j])</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">&gt;=</span> <span class="n">h3</span><span class="p">(</span><span class="n">w</span><span class="p">[</span><span class="n">j</span><span class="p">]))</span>
+
+    <span class="c1"># The total time a patient is seen by all tandems must be at most h4.</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">h4</span><span class="p">)</span>
+
+    <span class="c1"># y[j] is 1 if sum(model.t[i,j] for i in model.N) &gt; 0.</span>
+    <span class="n">M</span> <span class="o">=</span> <span class="mi">1000000</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">)</span> <span class="o">&lt;=</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">M</span><span class="p">)</span>
+         
+    <span class="c1"># y[j] is 0 if sum(model.t[i,j] for i in model.N) = 0</span>
+    <span class="n">epsilon</span> <span class="o">=</span> <span class="mf">0.000001</span>
+    <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">:</span>
+        <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">epsilon</span> <span class="o">*</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="o">&lt;=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span><span class="p">))</span>
+
+    <span class="c1"># The number of patients seen (sum(model.y[j] for j in model.P)) must be equal to the number of patients (p).</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">constraints</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">)</span> <span class="o">==</span> <span class="n">p</span><span class="p">)</span>
+
+    <span class="c1"># Load dual information</span>
+    <span class="c1"># model.dual = Suffix(direction=Suffix.IMPORT)</span>
+
+    <span class="c1"># Solve the model</span>
+    <span class="n">solver</span> <span class="o">=</span> <span class="n">SolverFactory</span><span class="p">(</span><span class="s1">&#39;glpk&#39;</span><span class="p">)</span>
+    <span class="n">results</span> <span class="o">=</span> <span class="n">solver</span><span class="o">.</span><span class="n">solve</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">tee</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>  <span class="c1"># Set tee=True to show solver output</span>
+
+    <span class="c1"># Check solver status and termination condition</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">status</span> <span class="o">==</span> <span class="n">SolverStatus</span><span class="o">.</span><span class="n">ok</span><span class="p">)</span> <span class="ow">and</span> <span class="p">(</span><span class="n">results</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">termination_condition</span> <span class="o">==</span> <span class="n">TerminationCondition</span><span class="o">.</span><span class="n">optimal</span><span class="p">):</span>
+        <span class="c1">#print(&quot;Solution Found&quot;)</span>
+        <span class="c1"># Extract optimal values for variables and objective</span>
+        <span class="n">t_optimal</span> <span class="o">=</span> <span class="p">{(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">):</span> <span class="n">model</span><span class="o">.</span><span class="n">t</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">N</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">}</span>
+        <span class="n">y_optimal</span> <span class="o">=</span> <span class="p">{</span><span class="n">j</span><span class="p">:</span> <span class="n">model</span><span class="o">.</span><span class="n">y</span><span class="p">[</span><span class="n">j</span><span class="p">]</span><span class="o">.</span><span class="n">value</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="n">model</span><span class="o">.</span><span class="n">P</span><span class="p">}</span>
+        <span class="n">f_optimal</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">cost</span><span class="o">.</span><span class="n">expr</span><span class="p">()</span>
+    <span class="k">elif</span> <span class="n">results</span><span class="o">.</span><span class="n">solver</span><span class="o">.</span><span class="n">termination_condition</span> <span class="o">==</span> <span class="n">TerminationCondition</span><span class="o">.</span><span class="n">infeasible</span><span class="p">:</span>
+        <span class="c1">#print(&quot;No feasible solution&quot;)</span>
+        <span class="n">t_optimal</span><span class="p">,</span> <span class="n">y_optimal</span><span class="p">,</span> <span class="n">f_optimal</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1">#print(&quot;No feasible solution&quot;)</span>
+        <span class="n">t_optimal</span><span class="p">,</span> <span class="n">y_optimal</span><span class="p">,</span> <span class="n">f_optimal</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span><span class="p">,</span> <span class="kc">None</span>
+
+    <span class="k">return</span> <span class="n">model</span><span class="p">,</span> <span class="n">t_optimal</span><span class="p">,</span> <span class="n">y_optimal</span><span class="p">,</span> <span class="n">f_optimal</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="preliminary-analysis">
+<h2><strong>Preliminary analysis</strong><a class="headerlink" href="#preliminary-analysis" title="Link to this heading">#</a></h2>
+<p>In this section we are going to do a preliminary numerical analysis of the problem posed above, for a given set of parameters.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Parameters definition:</span>
+<span class="n">n</span><span class="o">=</span><span class="mi">50</span><span class="p">;</span> <span class="n">p</span><span class="o">=</span><span class="mi">500</span><span class="p">;</span> <span class="n">h1</span><span class="o">=</span><span class="mi">6</span><span class="p">;</span> <span class="n">h2</span><span class="o">=</span><span class="mi">1</span><span class="p">;</span> <span class="n">h4</span><span class="o">=</span><span class="mi">4</span>
+
+<span class="n">h3_1_2</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">h3_3_4</span> <span class="o">=</span> <span class="mf">0.30</span> 
+<span class="n">h3_5_6</span> <span class="o">=</span> <span class="mf">0.55</span>  
+<span class="n">h3_7_8</span> <span class="o">=</span> <span class="mf">0.80</span> 
+<span class="n">h3_9_10</span> <span class="o">=</span> <span class="mi">1</span> 
+    
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> 
+
+<span class="c1"># Problem execution:</span>
+<span class="n">model</span><span class="p">,</span> <span class="n">t_optimal</span><span class="p">,</span> <span class="n">y_optimal</span><span class="p">,</span> <span class="n">f_optimal</span> <span class="o">=</span> <span class="n">hospital_relaxed_integer_model</span><span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">h1</span><span class="p">,</span> <span class="n">h2</span><span class="p">,</span> <span class="n">h3_1_2</span><span class="p">,</span> <span class="n">h3_3_4</span><span class="p">,</span> <span class="n">h3_5_6</span><span class="p">,</span> <span class="n">h3_7_8</span><span class="p">,</span> <span class="n">h3_9_10</span><span class="p">,</span> <span class="n">h4</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="optimal-values">
+<h3><strong>Optimal values</strong><a class="headerlink" href="#optimal-values" title="Link to this heading">#</a></h3>
+<p><strong>Decision variables</strong></p>
+<p>The optimal values for the <span class="math notranslate nohighlight">\(t_{ij}\)</span> decision variables for the given set of parameters are the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_optimal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{(0, 0): 0.0,
+ (0, 1): 0.0,
+ (0, 2): 0.0,
+ (0, 3): 0.0,
+ (0, 4): 0.0,
+ (0, 5): 0.0,
+ (0, 6): 0.0,
+ (0, 7): 0.0,
+ (0, 8): 0.0,
+ (0, 9): 0.0,
+ (0, 10): 0.0,
+ (0, 11): 0.0,
+ (0, 12): 0.0,
+ (0, 13): 0.0,
+ (0, 14): 0.0,
+ (0, 15): 0.0,
+ (0, 16): 0.0,
+ (0, 17): 0.0,
+ (0, 18): 0.0,
+ (0, 19): 0.0,
+ (0, 20): 0.0,
+ (0, 21): 0.0,
+ (0, 22): 0.0,
+ (0, 23): 0.0,
+ (0, 24): 0.0,
+ (0, 25): 0.0,
+ (0, 26): 0.0,
+ (0, 27): 0.0,
+ (0, 28): 0.0,
+ (0, 29): 0.0,
+ (0, 30): 0.0,
+ (0, 31): 0.0,
+ (0, 32): 0.0,
+ (0, 33): 0.0,
+ (0, 34): 0.0,
+ (0, 35): 0.0,
+ (0, 36): 0.0,
+ (0, 37): 0.0,
+ (0, 38): 0.0,
+ (0, 39): 0.0,
+ (0, 40): 0.0,
+ (0, 41): 0.0,
+ (0, 42): 0.0,
+ (0, 43): 0.0,
+ (0, 44): 0.0,
+ (0, 45): 0.0,
+ (0, 46): 0.0,
+ (0, 47): 0.0,
+ (0, 48): 0.0,
+ (0, 49): 0.0,
+ (0, 50): 0.0,
+ (0, 51): 0.0,
+ (0, 52): 0.0,
+ (0, 53): 0.0,
+ (0, 54): 0.0,
+ (0, 55): 0.0,
+ (0, 56): 0.0,
+ (0, 57): 0.0,
+ (0, 58): 0.0,
+ (0, 59): 0.0,
+ (0, 60): 0.0,
+ (0, 61): 0.0,
+ (0, 62): 0.0,
+ (0, 63): 0.0,
+ (0, 64): 0.0,
+ (0, 65): 0.0,
+ (0, 66): 0.0,
+ (0, 67): 0.0,
+ (0, 68): 0.0,
+ (0, 69): 0.0,
+ (0, 70): 0.0,
+ (0, 71): 0.0,
+ (0, 72): 0.0,
+ (0, 73): 0.0,
+ (0, 74): 0.0,
+ (0, 75): 0.0,
+ (0, 76): 0.0,
+ (0, 77): 0.0,
+ (0, 78): 0.0,
+ (0, 79): 0.0,
+ (0, 80): 0.0,
+ (0, 81): 0.0,
+ (0, 82): 0.0,
+ (0, 83): 0.0,
+ (0, 84): 0.0,
+ (0, 85): 0.0,
+ (0, 86): 0.0,
+ (0, 87): 0.0,
+ (0, 88): 0.0,
+ (0, 89): 0.0,
+ (0, 90): 0.0,
+ (0, 91): 0.0,
+ (0, 92): 0.0,
+ (0, 93): 0.0,
+ (0, 94): 0.0,
+ (0, 95): 0.0,
+ (0, 96): 0.0,
+ (0, 97): 0.0,
+ (0, 98): 0.0,
+ (0, 99): 0.0,
+ (0, 100): 0.0,
+ (0, 101): 0.0,
+ (0, 102): 0.0,
+ (0, 103): 0.0,
+ (0, 104): 0.0,
+ (0, 105): 0.0,
+ (0, 106): 0.0,
+ (0, 107): 0.0,
+ (0, 108): 0.0,
+ (0, 109): 0.0,
+ (0, 110): 0.0,
+ (0, 111): 0.0,
+ (0, 112): 0.0,
+ (0, 113): 0.0,
+ (0, 114): 0.0,
+ (0, 115): 0.0,
+ (0, 116): 0.0,
+ (0, 117): 0.0,
+ (0, 118): 0.0,
+ (0, 119): 0.0,
+ (0, 120): 0.0,
+ (0, 121): 0.0,
+ (0, 122): 0.0,
+ (0, 123): 0.0,
+ (0, 124): 0.0,
+ (0, 125): 0.0,
+ (0, 126): 0.0,
+ (0, 127): 0.0,
+ (0, 128): 0.0,
+ (0, 129): 0.0,
+ (0, 130): 0.0,
+ (0, 131): 0.0,
+ (0, 132): 0.0,
+ (0, 133): 0.0,
+ (0, 134): 0.0,
+ (0, 135): 0.0,
+ (0, 136): 0.0,
+ (0, 137): 0.0,
+ (0, 138): 0.0,
+ (0, 139): 0.0,
+ (0, 140): 0.0,
+ (0, 141): 0.0,
+ (0, 142): 0.0,
+ (0, 143): 0.0,
+ (0, 144): 0.0,
+ (0, 145): 0.0,
+ (0, 146): 0.0,
+ (0, 147): 0.0,
+ (0, 148): 0.0,
+ (0, 149): 0.0,
+ (0, 150): 0.0,
+ (0, 151): 0.0,
+ (0, 152): 0.0,
+ (0, 153): 0.0,
+ (0, 154): 0.0,
+ (0, 155): 0.0,
+ (0, 156): 0.0,
+ (0, 157): 0.0,
+ (0, 158): 0.0,
+ (0, 159): 0.0,
+ (0, 160): 0.0,
+ (0, 161): 0.0,
+ (0, 162): 0.0,
+ (0, 163): 0.0,
+ (0, 164): 0.0,
+ (0, 165): 0.0,
+ (0, 166): 0.0,
+ (0, 167): 0.0,
+ (0, 168): 0.0,
+ (0, 169): 0.0,
+ (0, 170): 0.0,
+ (0, 171): 0.0,
+ (0, 172): 0.0,
+ (0, 173): 0.0,
+ (0, 174): 0.0,
+ (0, 175): 0.0,
+ (0, 176): 0.0,
+ (0, 177): 0.0,
+ (0, 178): 0.0,
+ (0, 179): 0.0,
+ (0, 180): 0.0,
+ (0, 181): 0.0,
+ (0, 182): 0.0,
+ (0, 183): 0.0,
+ (0, 184): 0.0,
+ (0, 185): 0.0,
+ (0, 186): 0.0,
+ (0, 187): 0.0,
+ (0, 188): 0.0,
+ (0, 189): 0.0,
+ (0, 190): 0.0,
+ (0, 191): 0.0,
+ (0, 192): 0.0,
+ (0, 193): 0.0,
+ (0, 194): 0.0,
+ (0, 195): 0.0,
+ (0, 196): 0.0,
+ (0, 197): 0.0,
+ (0, 198): 0.0,
+ (0, 199): 0.0,
+ (0, 200): 0.0,
+ (0, 201): 0.0,
+ (0, 202): 0.0,
+ (0, 203): 0.0,
+ (0, 204): 0.0,
+ (0, 205): 0.0,
+ (0, 206): 0.0,
+ (0, 207): 0.0,
+ (0, 208): 0.0,
+ (0, 209): 0.0,
+ (0, 210): 0.0,
+ (0, 211): 0.0,
+ (0, 212): 0.0,
+ (0, 213): 0.0,
+ (0, 214): 0.0,
+ (0, 215): 0.0,
+ (0, 216): 0.0,
+ (0, 217): 0.0,
+ (0, 218): 0.0,
+ (0, 219): 0.0,
+ (0, 220): 0.0,
+ (0, 221): 0.0,
+ (0, 222): 0.0,
+ (0, 223): 0.0,
+ (0, 224): 0.0,
+ (0, 225): 0.0,
+ (0, 226): 0.0,
+ (0, 227): 0.0,
+ (0, 228): 0.0,
+ (0, 229): 0.0,
+ (0, 230): 0.0,
+ (0, 231): 0.0,
+ (0, 232): 0.0,
+ (0, 233): 0.0,
+ (0, 234): 0.0,
+ (0, 235): 0.0,
+ (0, 236): 0.0,
+ (0, 237): 0.0,
+ (0, 238): 0.0,
+ (0, 239): 0.0,
+ (0, 240): 0.0,
+ (0, 241): 0.0,
+ (0, 242): 0.0,
+ (0, 243): 0.0,
+ (0, 244): 0.0,
+ (0, 245): 0.0,
+ (0, 246): 0.0,
+ (0, 247): 0.0,
+ (0, 248): 0.0,
+ (0, 249): 0.0,
+ (0, 250): 0.0,
+ (0, 251): 0.0,
+ (0, 252): 0.0,
+ (0, 253): 0.0,
+ (0, 254): 0.0,
+ (0, 255): 0.0,
+ (0, 256): 0.0,
+ (0, 257): 0.0,
+ (0, 258): 0.0,
+ (0, 259): 0.0,
+ (0, 260): 0.0,
+ (0, 261): 0.0,
+ (0, 262): 0.0,
+ (0, 263): 0.0,
+ (0, 264): 0.0,
+ (0, 265): 0.0,
+ (0, 266): 0.0,
+ (0, 267): 0.0,
+ (0, 268): 0.0,
+ (0, 269): 0.0,
+ (0, 270): 0.0,
+ (0, 271): 0.0,
+ (0, 272): 0.0,
+ (0, 273): 0.0,
+ (0, 274): 0.0,
+ (0, 275): 0.0,
+ (0, 276): 0.0,
+ (0, 277): 0.0,
+ (0, 278): 0.0,
+ (0, 279): 0.0,
+ (0, 280): 0.0,
+ (0, 281): 0.0,
+ (0, 282): 0.0,
+ (0, 283): 0.0,
+ (0, 284): 0.0,
+ (0, 285): 0.0,
+ (0, 286): 0.0,
+ (0, 287): 0.0,
+ (0, 288): 0.0,
+ (0, 289): 0.0,
+ (0, 290): 0.0,
+ (0, 291): 0.0,
+ (0, 292): 0.0,
+ (0, 293): 0.0,
+ (0, 294): 0.0,
+ (0, 295): 0.0,
+ (0, 296): 0.0,
+ (0, 297): 0.0,
+ (0, 298): 0.0,
+ (0, 299): 0.0,
+ (0, 300): 0.0,
+ (0, 301): 0.0,
+ (0, 302): 0.0,
+ (0, 303): 0.0,
+ (0, 304): 0.0,
+ (0, 305): 0.0,
+ (0, 306): 0.0,
+ (0, 307): 0.0,
+ (0, 308): 0.0,
+ (0, 309): 0.0,
+ (0, 310): 0.0,
+ (0, 311): 0.0,
+ (0, 312): 0.0,
+ (0, 313): 0.0,
+ (0, 314): 0.0,
+ (0, 315): 0.0,
+ (0, 316): 0.0,
+ (0, 317): 0.0,
+ (0, 318): 0.0,
+ (0, 319): 0.0,
+ (0, 320): 0.0,
+ (0, 321): 0.0,
+ (0, 322): 0.0,
+ (0, 323): 0.0,
+ (0, 324): 0.0,
+ (0, 325): 0.0,
+ (0, 326): 0.0,
+ (0, 327): 0.0,
+ (0, 328): 0.0,
+ (0, 329): 0.0,
+ (0, 330): 0.0,
+ (0, 331): 0.0,
+ (0, 332): 0.0,
+ (0, 333): 0.0,
+ (0, 334): 0.0,
+ (0, 335): 0.0,
+ (0, 336): 0.0,
+ (0, 337): 0.0,
+ (0, 338): 0.0,
+ (0, 339): 0.0,
+ (0, 340): 0.0,
+ (0, 341): 0.0,
+ (0, 342): 0.0,
+ (0, 343): 0.0,
+ (0, 344): 0.0,
+ (0, 345): 0.0,
+ (0, 346): 0.0,
+ (0, 347): 0.0,
+ (0, 348): 0.0,
+ (0, 349): 0.0,
+ (0, 350): 0.0,
+ (0, 351): 0.0,
+ (0, 352): 0.0,
+ (0, 353): 0.0,
+ (0, 354): 0.0,
+ (0, 355): 0.0,
+ (0, 356): 0.0,
+ (0, 357): 0.0,
+ (0, 358): 0.0,
+ (0, 359): 0.0,
+ (0, 360): 0.0,
+ (0, 361): 0.0,
+ (0, 362): 0.0,
+ (0, 363): 0.0,
+ (0, 364): 0.0,
+ (0, 365): 0.0,
+ (0, 366): 0.0,
+ (0, 367): 0.0,
+ (0, 368): 0.0,
+ (0, 369): 0.0,
+ (0, 370): 0.0,
+ (0, 371): 0.0,
+ (0, 372): 0.0,
+ (0, 373): 0.0,
+ (0, 374): 0.0,
+ (0, 375): 0.0,
+ (0, 376): 0.0,
+ (0, 377): 0.0,
+ (0, 378): 0.0,
+ (0, 379): 0.0,
+ (0, 380): 0.0,
+ (0, 381): 0.0,
+ (0, 382): 0.0,
+ (0, 383): 0.0,
+ (0, 384): 0.0,
+ (0, 385): 0.0,
+ (0, 386): 0.0,
+ (0, 387): 0.0,
+ (0, 388): 0.0,
+ (0, 389): 0.0,
+ (0, 390): 0.0,
+ (0, 391): 0.0,
+ (0, 392): 0.0,
+ (0, 393): 0.0,
+ (0, 394): 0.0,
+ (0, 395): 0.0,
+ (0, 396): 0.0,
+ (0, 397): 0.0,
+ (0, 398): 0.0,
+ (0, 399): 0.0,
+ (0, 400): 0.0,
+ (0, 401): 0.0,
+ (0, 402): 0.0,
+ (0, 403): 0.0,
+ (0, 404): 0.0,
+ (0, 405): 0.0,
+ (0, 406): 0.0,
+ (0, 407): 0.0,
+ (0, 408): 0.0,
+ (0, 409): 0.0,
+ (0, 410): 0.0,
+ (0, 411): 0.0,
+ (0, 412): 0.0,
+ (0, 413): 0.0,
+ (0, 414): 0.0,
+ (0, 415): 0.0,
+ (0, 416): 0.0,
+ (0, 417): 0.0,
+ (0, 418): 0.0,
+ (0, 419): 0.0,
+ (0, 420): 0.0,
+ (0, 421): 0.0,
+ (0, 422): 0.0,
+ (0, 423): 0.0,
+ (0, 424): 0.0,
+ (0, 425): 0.0,
+ (0, 426): 0.0,
+ (0, 427): 0.0,
+ (0, 428): 0.0,
+ (0, 429): 0.0,
+ (0, 430): 0.0,
+ (0, 431): 0.0,
+ (0, 432): 0.0,
+ (0, 433): 0.0,
+ (0, 434): 0.0,
+ (0, 435): 0.0,
+ (0, 436): 0.0,
+ (0, 437): 0.0,
+ (0, 438): 0.0,
+ (0, 439): 0.0,
+ (0, 440): 0.0,
+ (0, 441): 0.0,
+ (0, 442): 0.0,
+ (0, 443): 0.0,
+ (0, 444): 0.0,
+ (0, 445): 0.0,
+ (0, 446): 0.0,
+ (0, 447): 0.0,
+ (0, 448): 0.0,
+ (0, 449): 0.0,
+ (0, 450): 0.0,
+ (0, 451): 0.0,
+ (0, 452): 0.0,
+ (0, 453): 0.0,
+ (0, 454): 0.0,
+ (0, 455): 0.0,
+ (0, 456): 0.0,
+ (0, 457): 0.0,
+ (0, 458): 0.0,
+ (0, 459): 0.0,
+ (0, 460): 0.0,
+ (0, 461): 0.0,
+ (0, 462): 0.0,
+ (0, 463): 0.0,
+ (0, 464): 0.0,
+ (0, 465): 0.0,
+ (0, 466): 0.0,
+ (0, 467): 0.0,
+ (0, 468): 0.0,
+ (0, 469): 0.0,
+ (0, 470): 0.0,
+ (0, 471): 0.0,
+ (0, 472): 0.0,
+ (0, 473): 0.0,
+ (0, 474): 0.0,
+ (0, 475): 0.0,
+ (0, 476): 0.0,
+ (0, 477): 0.0,
+ (0, 478): 0.450000000000001,
+ (0, 479): 0.0,
+ (0, 480): 0.0,
+ (0, 481): 0.0,
+ (0, 482): 0.0,
+ (0, 483): 0.0,
+ (0, 484): 0.0,
+ (0, 485): 0.0,
+ (0, 486): 0.0,
+ (0, 487): 0.55,
+ (0, 488): 0.0,
+ (0, 489): 0.0,
+ (0, 490): 0.0,
+ (0, 491): 0.3,
+ (0, 492): 0.55,
+ (0, 493): 1.0,
+ (0, 494): 0.0,
+ (0, 495): 0.8,
+ (0, 496): 1.0,
+ (0, 497): 0.0,
+ (0, 498): 0.55,
+ (0, 499): 0.8,
+ (1, 0): 0.0,
+ (1, 1): 0.0,
+ (1, 2): 0.0,
+ (1, 3): 0.0,
+ (1, 4): 0.0,
+ (1, 5): 0.0,
+ (1, 6): 0.0,
+ (1, 7): 0.0,
+ (1, 8): 0.0,
+ (1, 9): 0.0,
+ (1, 10): 0.0,
+ (1, 11): 0.0,
+ (1, 12): 0.0,
+ (1, 13): 1.0,
+ (1, 14): 0.0,
+ (1, 15): 0.550000000000004,
+ (1, 16): 0.0,
+ (1, 17): 0.0,
+ (1, 18): 0.55,
+ (1, 19): 0.0,
+ (1, 20): 0.8,
+ (1, 21): 0.0,
+ (1, 22): 0.3,
+ (1, 23): 0.55,
+ (1, 24): 0.8,
+ (1, 25): 0.3,
+ (1, 26): 0.55,
+ (1, 27): 0.599999999999997,
+ (1, 28): 0.0,
+ (1, 29): 0.0,
+ (1, 30): 0.0,
+ (1, 31): 0.0,
+ (1, 32): 0.0,
+ (1, 33): 0.0,
+ (1, 34): 0.0,
+ (1, 35): 0.0,
+ (1, 36): 0.0,
+ (1, 37): 0.0,
+ (1, 38): 0.0,
+ (1, 39): 0.0,
+ (1, 40): 0.0,
+ (1, 41): 0.0,
+ (1, 42): 0.0,
+ (1, 43): 0.0,
+ (1, 44): 0.0,
+ (1, 45): 0.0,
+ (1, 46): 0.0,
+ (1, 47): 0.0,
+ (1, 48): 0.0,
+ (1, 49): 0.0,
+ (1, 50): 0.0,
+ (1, 51): 0.0,
+ (1, 52): 0.0,
+ (1, 53): 0.0,
+ (1, 54): 0.0,
+ (1, 55): 0.0,
+ (1, 56): 0.0,
+ (1, 57): 0.0,
+ (1, 58): 0.0,
+ (1, 59): 0.0,
+ (1, 60): 0.0,
+ (1, 61): 0.0,
+ (1, 62): 0.0,
+ (1, 63): 0.0,
+ (1, 64): 0.0,
+ (1, 65): 0.0,
+ (1, 66): 0.0,
+ (1, 67): 0.0,
+ (1, 68): 0.0,
+ (1, 69): 0.0,
+ (1, 70): 0.0,
+ (1, 71): 0.0,
+ (1, 72): 0.0,
+ (1, 73): 0.0,
+ (1, 74): 0.0,
+ (1, 75): 0.0,
+ (1, 76): 0.0,
+ (1, 77): 0.0,
+ (1, 78): 0.0,
+ (1, 79): 0.0,
+ (1, 80): 0.0,
+ (1, 81): 0.0,
+ (1, 82): 0.0,
+ (1, 83): 0.0,
+ (1, 84): 0.0,
+ (1, 85): 0.0,
+ (1, 86): 0.0,
+ (1, 87): 0.0,
+ (1, 88): 0.0,
+ (1, 89): 0.0,
+ (1, 90): 0.0,
+ (1, 91): 0.0,
+ (1, 92): 0.0,
+ (1, 93): 0.0,
+ (1, 94): 0.0,
+ (1, 95): 0.0,
+ (1, 96): 0.0,
+ (1, 97): 0.0,
+ (1, 98): 0.0,
+ (1, 99): 0.0,
+ (1, 100): 0.0,
+ (1, 101): 0.0,
+ (1, 102): 0.0,
+ (1, 103): 0.0,
+ (1, 104): 0.0,
+ (1, 105): 0.0,
+ (1, 106): 0.0,
+ (1, 107): 0.0,
+ (1, 108): 0.0,
+ (1, 109): 0.0,
+ (1, 110): 0.0,
+ (1, 111): 0.0,
+ (1, 112): 0.0,
+ (1, 113): 0.0,
+ (1, 114): 0.0,
+ (1, 115): 0.0,
+ (1, 116): 0.0,
+ (1, 117): 0.0,
+ (1, 118): 0.0,
+ (1, 119): 0.0,
+ (1, 120): 0.0,
+ (1, 121): 0.0,
+ (1, 122): 0.0,
+ (1, 123): 0.0,
+ (1, 124): 0.0,
+ (1, 125): 0.0,
+ (1, 126): 0.0,
+ (1, 127): 0.0,
+ (1, 128): 0.0,
+ (1, 129): 0.0,
+ (1, 130): 0.0,
+ (1, 131): 0.0,
+ (1, 132): 0.0,
+ (1, 133): 0.0,
+ (1, 134): 0.0,
+ (1, 135): 0.0,
+ (1, 136): 0.0,
+ (1, 137): 0.0,
+ (1, 138): 0.0,
+ (1, 139): 0.0,
+ (1, 140): 0.0,
+ (1, 141): 0.0,
+ (1, 142): 0.0,
+ (1, 143): 0.0,
+ (1, 144): 0.0,
+ (1, 145): 0.0,
+ (1, 146): 0.0,
+ (1, 147): 0.0,
+ (1, 148): 0.0,
+ (1, 149): 0.0,
+ (1, 150): 0.0,
+ (1, 151): 0.0,
+ (1, 152): 0.0,
+ (1, 153): 0.0,
+ (1, 154): 0.0,
+ (1, 155): 0.0,
+ (1, 156): 0.0,
+ (1, 157): 0.0,
+ (1, 158): 0.0,
+ (1, 159): 0.0,
+ (1, 160): 0.0,
+ (1, 161): 0.0,
+ (1, 162): 0.0,
+ (1, 163): 0.0,
+ (1, 164): 0.0,
+ (1, 165): 0.0,
+ (1, 166): 0.0,
+ (1, 167): 0.0,
+ (1, 168): 0.0,
+ (1, 169): 0.0,
+ (1, 170): 0.0,
+ (1, 171): 0.0,
+ (1, 172): 0.0,
+ (1, 173): 0.0,
+ (1, 174): 0.0,
+ (1, 175): 0.0,
+ (1, 176): 0.0,
+ (1, 177): 0.0,
+ (1, 178): 0.0,
+ (1, 179): 0.0,
+ (1, 180): 0.0,
+ (1, 181): 0.0,
+ (1, 182): 0.0,
+ (1, 183): 0.0,
+ (1, 184): 0.0,
+ (1, 185): 0.0,
+ (1, 186): 0.0,
+ (1, 187): 0.0,
+ (1, 188): 0.0,
+ (1, 189): 0.0,
+ (1, 190): 0.0,
+ (1, 191): 0.0,
+ (1, 192): 0.0,
+ (1, 193): 0.0,
+ (1, 194): 0.0,
+ (1, 195): 0.0,
+ (1, 196): 0.0,
+ (1, 197): 0.0,
+ (1, 198): 0.0,
+ (1, 199): 0.0,
+ (1, 200): 0.0,
+ (1, 201): 0.0,
+ (1, 202): 0.0,
+ (1, 203): 0.0,
+ (1, 204): 0.0,
+ (1, 205): 0.0,
+ (1, 206): 0.0,
+ (1, 207): 0.0,
+ (1, 208): 0.0,
+ (1, 209): 0.0,
+ (1, 210): 0.0,
+ (1, 211): 0.0,
+ (1, 212): 0.0,
+ (1, 213): 0.0,
+ (1, 214): 0.0,
+ (1, 215): 0.0,
+ (1, 216): 0.0,
+ (1, 217): 0.0,
+ (1, 218): 0.0,
+ (1, 219): 0.0,
+ (1, 220): 0.0,
+ (1, 221): 0.0,
+ (1, 222): 0.0,
+ (1, 223): 0.0,
+ (1, 224): 0.0,
+ (1, 225): 0.0,
+ (1, 226): 0.0,
+ (1, 227): 0.0,
+ (1, 228): 0.0,
+ (1, 229): 0.0,
+ (1, 230): 0.0,
+ (1, 231): 0.0,
+ (1, 232): 0.0,
+ (1, 233): 0.0,
+ (1, 234): 0.0,
+ (1, 235): 0.0,
+ (1, 236): 0.0,
+ (1, 237): 0.0,
+ (1, 238): 0.0,
+ (1, 239): 0.0,
+ (1, 240): 0.0,
+ (1, 241): 0.0,
+ (1, 242): 0.0,
+ (1, 243): 0.0,
+ (1, 244): 0.0,
+ (1, 245): 0.0,
+ (1, 246): 0.0,
+ (1, 247): 0.0,
+ (1, 248): 0.0,
+ (1, 249): 0.0,
+ (1, 250): 0.0,
+ (1, 251): 0.0,
+ (1, 252): 0.0,
+ (1, 253): 0.0,
+ (1, 254): 0.0,
+ (1, 255): 0.0,
+ (1, 256): 0.0,
+ (1, 257): 0.0,
+ (1, 258): 0.0,
+ (1, 259): 0.0,
+ (1, 260): 0.0,
+ (1, 261): 0.0,
+ (1, 262): 0.0,
+ (1, 263): 0.0,
+ (1, 264): 0.0,
+ (1, 265): 0.0,
+ (1, 266): 0.0,
+ (1, 267): 0.0,
+ (1, 268): 0.0,
+ (1, 269): 0.0,
+ (1, 270): 0.0,
+ (1, 271): 0.0,
+ (1, 272): 0.0,
+ (1, 273): 0.0,
+ (1, 274): 0.0,
+ (1, 275): 0.0,
+ (1, 276): 0.0,
+ (1, 277): 0.0,
+ (1, 278): 0.0,
+ (1, 279): 0.0,
+ (1, 280): 0.0,
+ (1, 281): 0.0,
+ (1, 282): 0.0,
+ (1, 283): 0.0,
+ (1, 284): 0.0,
+ (1, 285): 0.0,
+ (1, 286): 0.0,
+ (1, 287): 0.0,
+ (1, 288): 0.0,
+ (1, 289): 0.0,
+ (1, 290): 0.0,
+ (1, 291): 0.0,
+ (1, 292): 0.0,
+ (1, 293): 0.0,
+ (1, 294): 0.0,
+ (1, 295): 0.0,
+ (1, 296): 0.0,
+ (1, 297): 0.0,
+ (1, 298): 0.0,
+ (1, 299): 0.0,
+ (1, 300): 0.0,
+ (1, 301): 0.0,
+ (1, 302): 0.0,
+ (1, 303): 0.0,
+ (1, 304): 0.0,
+ (1, 305): 0.0,
+ (1, 306): 0.0,
+ (1, 307): 0.0,
+ (1, 308): 0.0,
+ (1, 309): 0.0,
+ (1, 310): 0.0,
+ (1, 311): 0.0,
+ (1, 312): 0.0,
+ (1, 313): 0.0,
+ (1, 314): 0.0,
+ (1, 315): 0.0,
+ (1, 316): 0.0,
+ (1, 317): 0.0,
+ (1, 318): 0.0,
+ (1, 319): 0.0,
+ (1, 320): 0.0,
+ (1, 321): 0.0,
+ (1, 322): 0.0,
+ (1, 323): 0.0,
+ (1, 324): 0.0,
+ (1, 325): 0.0,
+ (1, 326): 0.0,
+ (1, 327): 0.0,
+ (1, 328): 0.0,
+ (1, 329): 0.0,
+ (1, 330): 0.0,
+ (1, 331): 0.0,
+ (1, 332): 0.0,
+ (1, 333): 0.0,
+ (1, 334): 0.0,
+ (1, 335): 0.0,
+ (1, 336): 0.0,
+ (1, 337): 0.0,
+ (1, 338): 0.0,
+ (1, 339): 0.0,
+ (1, 340): 0.0,
+ (1, 341): 0.0,
+ (1, 342): 0.0,
+ (1, 343): 0.0,
+ (1, 344): 0.0,
+ (1, 345): 0.0,
+ (1, 346): 0.0,
+ (1, 347): 0.0,
+ (1, 348): 0.0,
+ (1, 349): 0.0,
+ (1, 350): 0.0,
+ (1, 351): 0.0,
+ (1, 352): 0.0,
+ (1, 353): 0.0,
+ (1, 354): 0.0,
+ (1, 355): 0.0,
+ (1, 356): 0.0,
+ (1, 357): 0.0,
+ (1, 358): 0.0,
+ (1, 359): 0.0,
+ (1, 360): 0.0,
+ (1, 361): 0.0,
+ (1, 362): 0.0,
+ (1, 363): 0.0,
+ (1, 364): 0.0,
+ (1, 365): 0.0,
+ (1, 366): 0.0,
+ (1, 367): 0.0,
+ (1, 368): 0.0,
+ (1, 369): 0.0,
+ (1, 370): 0.0,
+ (1, 371): 0.0,
+ (1, 372): 0.0,
+ (1, 373): 0.0,
+ (1, 374): 0.0,
+ (1, 375): 0.0,
+ (1, 376): 0.0,
+ (1, 377): 0.0,
+ (1, 378): 0.0,
+ (1, 379): 0.0,
+ (1, 380): 0.0,
+ (1, 381): 0.0,
+ (1, 382): 0.0,
+ (1, 383): 0.0,
+ (1, 384): 0.0,
+ (1, 385): 0.0,
+ (1, 386): 0.0,
+ (1, 387): 0.0,
+ (1, 388): 0.0,
+ (1, 389): 0.0,
+ (1, 390): 0.0,
+ (1, 391): 0.0,
+ (1, 392): 0.0,
+ (1, 393): 0.0,
+ (1, 394): 0.0,
+ (1, 395): 0.0,
+ (1, 396): 0.0,
+ (1, 397): 0.0,
+ (1, 398): 0.0,
+ (1, 399): 0.0,
+ (1, 400): 0.0,
+ (1, 401): 0.0,
+ (1, 402): 0.0,
+ (1, 403): 0.0,
+ (1, 404): 0.0,
+ (1, 405): 0.0,
+ (1, 406): 0.0,
+ (1, 407): 0.0,
+ (1, 408): 0.0,
+ (1, 409): 0.0,
+ (1, 410): 0.0,
+ (1, 411): 0.0,
+ (1, 412): 0.0,
+ (1, 413): 0.0,
+ (1, 414): 0.0,
+ (1, 415): 0.0,
+ (1, 416): 0.0,
+ (1, 417): 0.0,
+ (1, 418): 0.0,
+ (1, 419): 0.0,
+ (1, 420): 0.0,
+ (1, 421): 0.0,
+ (1, 422): 0.0,
+ (1, 423): 0.0,
+ (1, 424): 0.0,
+ (1, 425): 0.0,
+ (1, 426): 0.0,
+ (1, 427): 0.0,
+ (1, 428): 0.0,
+ (1, 429): 0.0,
+ (1, 430): 0.0,
+ (1, 431): 0.0,
+ (1, 432): 0.0,
+ (1, 433): 0.0,
+ (1, 434): 0.0,
+ (1, 435): 0.0,
+ (1, 436): 0.0,
+ (1, 437): 0.0,
+ (1, 438): 0.0,
+ (1, 439): 0.0,
+ (1, 440): 0.0,
+ (1, 441): 0.0,
+ (1, 442): 0.0,
+ (1, 443): 0.0,
+ (1, 444): 0.0,
+ (1, 445): 0.0,
+ (1, 446): 0.0,
+ (1, 447): 0.0,
+ (1, 448): 0.0,
+ (1, 449): 0.0,
+ (1, 450): 0.0,
+ (1, 451): 0.0,
+ (1, 452): 0.0,
+ (1, 453): 0.0,
+ (1, 454): 0.0,
+ (1, 455): 0.0,
+ (1, 456): 0.0,
+ (1, 457): 0.0,
+ (1, 458): 0.0,
+ (1, 459): 0.0,
+ (1, 460): 0.0,
+ (1, 461): 0.0,
+ (1, 462): 0.0,
+ (1, 463): 0.0,
+ (1, 464): 0.0,
+ (1, 465): 0.0,
+ (1, 466): 0.0,
+ (1, 467): 0.0,
+ (1, 468): 0.0,
+ (1, 469): 0.0,
+ (1, 470): 0.0,
+ (1, 471): 0.0,
+ (1, 472): 0.0,
+ (1, 473): 0.0,
+ (1, 474): 0.0,
+ (1, 475): 0.0,
+ (1, 476): 0.0,
+ (1, 477): 0.0,
+ (1, 478): 0.0,
+ (1, 479): 0.0,
+ (1, 480): 0.0,
+ (1, 481): 0.0,
+ (1, 482): 0.0,
+ (1, 483): 0.0,
+ (1, 484): 0.0,
+ (1, 485): 0.0,
+ (1, 486): 0.0,
+ (1, 487): 0.0,
+ (1, 488): 0.0,
+ (1, 489): 0.0,
+ (1, 490): 0.0,
+ (1, 491): 0.0,
+ (1, 492): 0.0,
+ (1, 493): 0.0,
+ (1, 494): 0.0,
+ (1, 495): 0.0,
+ (1, 496): 0.0,
+ (1, 497): 0.0,
+ (1, 498): 0.0,
+ (1, 499): 0.0,
+ ...}
+</pre></div>
+</div>
+</div>
+</div>
+<p>The optimal values for the <span class="math notranslate nohighlight">\(y_{j}\)</span> decision variables for the given set of parameters are the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">y_optimal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{0: 3e-07,
+ 1: 3e-07,
+ 2: 8e-07,
+ 3: 0.0,
+ 4: 3e-07,
+ 5: 1e-06,
+ 6: 8e-07,
+ 7: 0.0,
+ 8: 0.0,
+ 9: 0.0,
+ 10: 1e-06,
+ 11: 0.0,
+ 12: 0.0,
+ 13: 4e-06,
+ 14: 3e-07,
+ 15: 5.5000000000002e-07,
+ 16: 0.0,
+ 17: 0.0,
+ 18: 5.5e-07,
+ 19: 0.0,
+ 20: 8e-07,
+ 21: 3e-07,
+ 22: 3e-07,
+ 23: 5.5e-07,
+ 24: 8e-07,
+ 25: 3e-07,
+ 26: 5.5e-07,
+ 27: 1e-06,
+ 28: 0.0,
+ 29: 8e-07,
+ 30: 4e-06,
+ 31: 3e-07,
+ 32: 5.5e-07,
+ 33: 8e-07,
+ 34: 0.0,
+ 35: 5.5e-07,
+ 36: 8e-07,
+ 37: 3e-07,
+ 38: 0.0,
+ 39: 1e-06,
+ 40: 3e-07,
+ 41: 5.5e-07,
+ 42: 0.0,
+ 43: 3e-07,
+ 44: 8e-07,
+ 45: 3e-07,
+ 46: 5.5e-07,
+ 47: 5.5e-07,
+ 48: 8e-07,
+ 49: 3e-07,
+ 50: 0.0,
+ 51: 8e-07,
+ 52: 5.5e-07,
+ 53: 8e-07,
+ 54: 8e-07,
+ 55: 8e-07,
+ 56: 0.0,
+ 57: 5.5e-07,
+ 58: 8e-07,
+ 59: 4e-06,
+ 60: 3e-07,
+ 61: 5.5e-07,
+ 62: 1e-06,
+ 63: 0.0,
+ 64: 3e-07,
+ 65: 0.0,
+ 66: 0.0,
+ 67: 3e-07,
+ 68: 5.5e-07,
+ 69: 4e-06,
+ 70: 0.0,
+ 71: 1e-06,
+ 72: 0.0,
+ 73: 8e-07,
+ 74: 3e-07,
+ 75: 3e-07,
+ 76: 5.5e-07,
+ 77: 4e-06,
+ 78: 7.99999999999997e-07,
+ 79: 4.00000000000001e-06,
+ 80: 3e-07,
+ 81: 3e-07,
+ 82: 3e-07,
+ 83: 3e-07,
+ 84: 1e-06,
+ 85: 8e-07,
+ 86: 4e-06,
+ 87: 8e-07,
+ 88: 8e-07,
+ 89: 3e-07,
+ 90: 4e-06,
+ 91: 8e-07,
+ 92: 8e-07,
+ 93: 8e-07,
+ 94: 0.0,
+ 95: 2.99999999999984e-07,
+ 96: 5.5e-07,
+ 97: 3e-07,
+ 98: 0.0,
+ 99: 0.0,
+ 100: 5.5e-07,
+ 101: 1e-06,
+ 102: 8e-07,
+ 103: 1e-06,
+ 104: 1e-06,
+ 105: 0.0,
+ 106: 0.0,
+ 107: 3e-07,
+ 108: 0.0,
+ 109: 3e-07,
+ 110: 5.5e-07,
+ 111: 8e-07,
+ 112: 8e-07,
+ 113: 0.0,
+ 114: 5.5e-07,
+ 115: 3e-07,
+ 116: 3e-07,
+ 117: 8e-07,
+ 118: 8e-07,
+ 119: 1e-06,
+ 120: 8e-07,
+ 121: 5.5e-07,
+ 122: 5.5e-07,
+ 123: 8e-07,
+ 124: 0.0,
+ 125: 0.0,
+ 126: 1e-06,
+ 127: 1e-06,
+ 128: 1e-06,
+ 129: 5.5e-07,
+ 130: 1e-06,
+ 131: 8e-07,
+ 132: 0.0,
+ 133: 8e-07,
+ 134: 1e-06,
+ 135: 8e-07,
+ 136: 1e-06,
+ 137: 0.0,
+ 138: 8e-07,
+ 139: 0.0,
+ 140: 8e-07,
+ 141: 1e-06,
+ 142: 1e-06,
+ 143: 8e-07,
+ 144: 0.0,
+ 145: 3e-07,
+ 146: 0.0,
+ 147: 1e-06,
+ 148: 8e-07,
+ 149: 5.5e-07,
+ 150: 0.0,
+ 151: 3e-07,
+ 152: 5.5e-07,
+ 153: 3e-07,
+ 154: 3e-07,
+ 155: 1e-06,
+ 156: 3e-07,
+ 157: 3e-07,
+ 158: 8e-07,
+ 159: 8e-07,
+ 160: 4e-06,
+ 161: 0.0,
+ 162: 3e-07,
+ 163: 1e-06,
+ 164: 3e-07,
+ 165: 8e-07,
+ 166: 1e-06,
+ 167: 1e-06,
+ 168: 3e-07,
+ 169: 3e-07,
+ 170: 5.5e-07,
+ 171: 8e-07,
+ 172: 0.0,
+ 173: 1e-06,
+ 174: 8e-07,
+ 175: 8e-07,
+ 176: 5.5e-07,
+ 177: 5.5e-07,
+ 178: 5.5e-07,
+ 179: 0.0,
+ 180: 1e-06,
+ 181: 4e-06,
+ 182: 3e-07,
+ 183: 5.5e-07,
+ 184: 0.0,
+ 185: 5.5e-07,
+ 186: 1e-06,
+ 187: 3e-07,
+ 188: 5.5e-07,
+ 189: 3e-07,
+ 190: 0.0,
+ 191: 3e-07,
+ 192: 8e-07,
+ 193: 8e-07,
+ 194: 3e-07,
+ 195: 5.5e-07,
+ 196: 0.0,
+ 197: 8e-07,
+ 198: 5.5e-07,
+ 199: 1e-06,
+ 200: 0.0,
+ 201: 3e-07,
+ 202: 1e-06,
+ 203: 5.5e-07,
+ 204: 0.0,
+ 205: 4e-06,
+ 206: 3e-07,
+ 207: 3e-07,
+ 208: 3e-07,
+ 209: 0.0,
+ 210: 8e-07,
+ 211: 8e-07,
+ 212: 3e-07,
+ 213: 0.0,
+ 214: 8e-07,
+ 215: 3e-07,
+ 216: 8e-07,
+ 217: 5.5e-07,
+ 218: 4e-06,
+ 219: 1e-06,
+ 220: 1e-06,
+ 221: 5.5e-07,
+ 222: 8e-07,
+ 223: 1e-06,
+ 224: 5.5e-07,
+ 225: 1.25000000000028e-06,
+ 226: 3e-07,
+ 227: 5.5e-07,
+ 228: 3e-07,
+ 229: 3e-07,
+ 230: 0.0,
+ 231: 8e-07,
+ 232: 1e-06,
+ 233: 5.5e-07,
+ 234: 8e-07,
+ 235: 8e-07,
+ 236: 8e-07,
+ 237: 5.5e-07,
+ 238: 0.0,
+ 239: 0.0,
+ 240: 1e-06,
+ 241: 0.0,
+ 242: 0.0,
+ 243: 5.5e-07,
+ 244: 5.5e-07,
+ 245: 5.5e-07,
+ 246: 5.5e-07,
+ 247: 0.0,
+ 248: 8e-07,
+ 249: 0.0,
+ 250: 3e-07,
+ 251: 3e-07,
+ 252: 8e-07,
+ 253: 8e-07,
+ 254: 3e-07,
+ 255: 8e-07,
+ 256: 0.0,
+ 257: 1e-06,
+ 258: 5.5e-07,
+ 259: 0.0,
+ 260: 8e-07,
+ 261: 5.5e-07,
+ 262: 1.55e-06,
+ 263: 0.0,
+ 264: 3e-07,
+ 265: 0.0,
+ 266: 3e-07,
+ 267: 8e-07,
+ 268: 8e-07,
+ 269: 8e-07,
+ 270: 5.5e-07,
+ 271: 3e-07,
+ 272: 8e-07,
+ 273: 3e-07,
+ 274: 5.5e-07,
+ 275: 0.0,
+ 276: 5.5e-07,
+ 277: 1e-06,
+ 278: 0.0,
+ 279: 3e-07,
+ 280: 1e-06,
+ 281: 0.0,
+ 282: 5.5e-07,
+ 283: 8e-07,
+ 284: 0.0,
+ 285: 5.5e-07,
+ 286: 0.0,
+ 287: 8e-07,
+ 288: 0.0,
+ 289: 3e-07,
+ 290: 0.0,
+ 291: 8e-07,
+ 292: 3e-07,
+ 293: 8e-07,
+ 294: 5.5e-07,
+ 295: 0.0,
+ 296: 0.0,
+ 297: 0.0,
+ 298: 3e-07,
+ 299: 8e-07,
+ 300: 5.5e-07,
+ 301: 1e-06,
+ 302: 0.0,
+ 303: 5.5e-07,
+ 304: 3e-07,
+ 305: 8e-07,
+ 306: 5.5e-07,
+ 307: 8e-07,
+ 308: 0.0,
+ 309: 8e-07,
+ 310: 0.0,
+ 311: 3e-07,
+ 312: 0.0,
+ 313: 3e-07,
+ 314: 0.0,
+ 315: 1e-06,
+ 316: 5.5e-07,
+ 317: 0.0,
+ 318: 5.5e-07,
+ 319: 3e-07,
+ 320: 3e-07,
+ 321: 3e-07,
+ 322: 0.0,
+ 323: 3e-07,
+ 324: 0.0,
+ 325: 3e-07,
+ 326: 8e-07,
+ 327: 1e-06,
+ 328: 0.0,
+ 329: 3e-07,
+ 330: 1e-06,
+ 331: 8e-07,
+ 332: 0.0,
+ 333: 5.5e-07,
+ 334: 5.5e-07,
+ 335: 8e-07,
+ 336: 0.0,
+ 337: 8e-07,
+ 338: 1e-06,
+ 339: 1e-06,
+ 340: 0.0,
+ 341: 0.0,
+ 342: 0.0,
+ 343: 8e-07,
+ 344: 5.5e-07,
+ 345: 3e-07,
+ 346: 0.0,
+ 347: 5.5e-07,
+ 348: 1e-06,
+ 349: 5.5e-07,
+ 350: 1e-06,
+ 351: 3e-07,
+ 352: 5.5e-07,
+ 353: 0.0,
+ 354: 1e-06,
+ 355: 0.0,
+ 356: 1e-06,
+ 357: 0.0,
+ 358: 5.5e-07,
+ 359: 1e-06,
+ 360: 1e-06,
+ 361: 5.5e-07,
+ 362: 8e-07,
+ 363: 1e-06,
+ 364: 8e-07,
+ 365: 1e-06,
+ 366: 3e-07,
+ 367: 0.0,
+ 368: 0.0,
+ 369: 1e-06,
+ 370: 1e-06,
+ 371: 5.5e-07,
+ 372: 3e-07,
+ 373: 5.5e-07,
+ 374: 5.5e-07,
+ 375: 3e-07,
+ 376: 3e-07,
+ 377: 8e-07,
+ 378: 3e-07,
+ 379: 0.0,
+ 380: 3e-07,
+ 381: 1e-06,
+ 382: 3e-07,
+ 383: 8e-07,
+ 384: 3e-07,
+ 385: 3e-07,
+ 386: 0.0,
+ 387: 1e-06,
+ 388: 1e-06,
+ 389: 0.0,
+ 390: 3e-07,
+ 391: 3e-07,
+ 392: 8e-07,
+ 393: 1e-06,
+ 394: 3e-07,
+ 395: 8e-07,
+ 396: 1e-06,
+ 397: 8e-07,
+ 398: 0.0,
+ 399: 5.5e-07,
+ 400: 8e-07,
+ 401: 5.5e-07,
+ 402: 8e-07,
+ 403: 1e-06,
+ 404: 0.0,
+ 405: 3e-07,
+ 406: 8e-07,
+ 407: 5.5e-07,
+ 408: 3e-07,
+ 409: 8e-07,
+ 410: 3e-07,
+ 411: 8e-07,
+ 412: 0.0,
+ 413: 8e-07,
+ 414: 8e-07,
+ 415: 1e-06,
+ 416: 8e-07,
+ 417: 1e-06,
+ 418: 0.0,
+ 419: 5.5e-07,
+ 420: 3e-07,
+ 421: 3e-07,
+ 422: 5.5e-07,
+ 423: 3e-07,
+ 424: 3e-07,
+ 425: 1.2e-06,
+ 426: 8e-07,
+ 427: 0.0,
+ 428: 1e-06,
+ 429: 0.0,
+ 430: 0.0,
+ 431: 5.5e-07,
+ 432: 8e-07,
+ 433: 3e-07,
+ 434: 5.5e-07,
+ 435: 1e-06,
+ 436: 3e-07,
+ 437: 5.50000000000003e-07,
+ 438: 1.39999999999999e-06,
+ 439: 8e-07,
+ 440: 3e-07,
+ 441: 8e-07,
+ 442: 8e-07,
+ 443: 8e-07,
+ 444: 5.5e-07,
+ 445: 8e-07,
+ 446: 1e-06,
+ 447: 5.5e-07,
+ 448: 0.0,
+ 449: 8e-07,
+ 450: 8e-07,
+ 451: 3e-07,
+ 452: 5.5e-07,
+ 453: 0.0,
+ 454: 0.0,
+ 455: 8e-07,
+ 456: 3e-07,
+ 457: 8e-07,
+ 458: 1e-06,
+ 459: 2e-06,
+ 460: 5.5e-07,
+ 461: 5.5e-07,
+ 462: 5.5e-07,
+ 463: 8e-07,
+ 464: 8e-07,
+ 465: 1.6e-06,
+ 466: 1e-06,
+ 467: 5.5e-07,
+ 468: 0.0,
+ 469: 5.5e-07,
+ 470: 5.5e-07,
+ 471: 1e-06,
+ 472: 1e-06,
+ 473: 5.5e-07,
+ 474: 0.0,
+ 475: 0.0,
+ 476: 8e-07,
+ 477: 0.0,
+ 478: 2.45e-06,
+ 479: 5.5e-07,
+ 480: 8e-07,
+ 481: 5.5e-07,
+ 482: 5.5e-07,
+ 483: 3e-07,
+ 484: 5.5e-07,
+ 485: 8e-07,
+ 486: 3e-07,
+ 487: 5.5e-07,
+ 488: 3e-07,
+ 489: 5.5e-07,
+ 490: 3e-07,
+ 491: 3e-07,
+ 492: 5.5e-07,
+ 493: 1e-06,
+ 494: 0.0,
+ 495: 8e-07,
+ 496: 1e-06,
+ 497: 1e-06,
+ 498: 5.5e-07,
+ 499: 499.9997008}
+</pre></div>
+</div>
+</div>
+</div>
+<p>For example, the time spent in patient <span class="math notranslate nohighlight">\(j=5\)</span> by tandem <span class="math notranslate nohighlight">\(i=1\)</span>, i.e. <span class="math notranslate nohighlight">\(t_{15}\)</span>, is:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">t_optimal</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span><span class="mi">4</span><span class="p">]</span> <span class="c1"># 0 h</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Objective function</strong></p>
+<p>In this case the optimal value for the objective function is the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f_optimal</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>2316.600000000006
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="time-spent-in-patients">
+<h3><strong>Time spent in patients</strong><a class="headerlink" href="#time-spent-in-patients" title="Link to this heading">#</a></h3>
+<p>Now we are going to analyze the time spent in the patients, in this particular case.</p>
+<p>We built a function that computes the time spent seeing patient j in a given day .
+It’s important to notice that a patient could be seen by several nurse-doctor tandems.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Time spent seeing patient j in a given day (he could be seen by several nurse-doctor tandems).</span>
+<span class="k">def</span> <span class="nf">time_seeing_patient</span><span class="p">(</span><span class="n">j</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">t_optimal</span><span class="p">[</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">n</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>For example, total time spent in patient <span class="math notranslate nohighlight">\(j=45\)</span>, that is, <span class="math notranslate nohighlight">\(\sum_{i=1}^n t_{i45}\)</span>, is the following:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">time_seeing_patient</span><span class="p">(</span><span class="mi">44</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8
+</pre></div>
+</div>
+</div>
+</div>
+<p>Using the previous function we can collect the total time spent in each patient in an array.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_times_per_patient</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">time_seeing_patient</span><span class="p">(</span><span class="n">j</span><span class="p">)</span> <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">p</span><span class="p">)])</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">total_times_per_patient</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.3 , 0.3 , 0.8 , 0.  , 0.3 , 1.  , 0.8 , 0.  , 0.  , 0.  , 1.  ,
+       0.  , 0.  , 4.  , 0.3 , 0.55, 0.  , 0.  , 0.55, 0.  , 0.8 , 0.3 ,
+       0.3 , 0.55, 0.8 , 0.3 , 0.55, 1.  , 0.  , 0.8 , 4.  , 0.3 , 0.55,
+       0.8 , 0.  , 0.55, 0.8 , 0.3 , 0.  , 1.  , 0.3 , 0.55, 0.  , 0.3 ,
+       0.8 , 0.3 , 0.55, 0.55, 0.8 , 0.3 , 0.  , 0.8 , 0.55, 0.8 , 0.8 ,
+       0.8 , 0.  , 0.55, 0.8 , 4.  , 0.3 , 0.55, 1.  , 0.  , 0.3 , 0.  ,
+       0.  , 0.3 , 0.55, 4.  , 0.  , 1.  , 0.  , 0.8 , 0.3 , 0.3 , 0.55,
+       4.  , 0.8 , 4.  , 0.3 , 0.3 , 0.3 , 0.3 , 1.  , 0.8 , 4.  , 0.8 ,
+       0.8 , 0.3 , 4.  , 0.8 , 0.8 , 0.8 , 0.  , 0.3 , 0.55, 0.3 , 0.  ,
+       0.  , 0.55, 1.  , 0.8 , 1.  , 1.  , 0.  , 0.  , 0.3 , 0.  , 0.3 ,
+       0.55, 0.8 , 0.8 , 0.  , 0.55, 0.3 , 0.3 , 0.8 , 0.8 , 1.  , 0.8 ,
+       0.55, 0.55, 0.8 , 0.  , 0.  , 1.  , 1.  , 1.  , 0.55, 1.  , 0.8 ,
+       0.  , 0.8 , 1.  , 0.8 , 1.  , 0.  , 0.8 , 0.  , 0.8 , 1.  , 1.  ,
+       0.8 , 0.  , 0.3 , 0.  , 1.  , 0.8 , 0.55, 0.  , 0.3 , 0.55, 0.3 ,
+       0.3 , 1.  , 0.3 , 0.3 , 0.8 , 0.8 , 4.  , 0.  , 0.3 , 1.  , 0.3 ,
+       0.8 , 1.  , 1.  , 0.3 , 0.3 , 0.55, 0.8 , 0.  , 1.  , 0.8 , 0.8 ,
+       0.55, 0.55, 0.55, 0.  , 1.  , 4.  , 0.3 , 0.55, 0.  , 0.55, 1.  ,
+       0.3 , 0.55, 0.3 , 0.  , 0.3 , 0.8 , 0.8 , 0.3 , 0.55, 0.  , 0.8 ,
+       0.55, 1.  , 0.  , 0.3 , 1.  , 0.55, 0.  , 4.  , 0.3 , 0.3 , 0.3 ,
+       0.  , 0.8 , 0.8 , 0.3 , 0.  , 0.8 , 0.3 , 0.8 , 0.55, 4.  , 1.  ,
+       1.  , 0.55, 0.8 , 1.  , 0.55, 1.25, 0.3 , 0.55, 0.3 , 0.3 , 0.  ,
+       0.8 , 1.  , 0.55, 0.8 , 0.8 , 0.8 , 0.55, 0.  , 0.  , 1.  , 0.  ,
+       0.  , 0.55, 0.55, 0.55, 0.55, 0.  , 0.8 , 0.  , 0.3 , 0.3 , 0.8 ,
+       0.8 , 0.3 , 0.8 , 0.  , 1.  , 0.55, 0.  , 0.8 , 0.55, 1.55, 0.  ,
+       0.3 , 0.  , 0.3 , 0.8 , 0.8 , 0.8 , 0.55, 0.3 , 0.8 , 0.3 , 0.55,
+       0.  , 0.55, 1.  , 0.  , 0.3 , 1.  , 0.  , 0.55, 0.8 , 0.  , 0.55,
+       0.  , 0.8 , 0.  , 0.3 , 0.  , 0.8 , 0.3 , 0.8 , 0.55, 0.  , 0.  ,
+       0.  , 0.3 , 0.8 , 0.55, 1.  , 0.  , 0.55, 0.3 , 0.8 , 0.55, 0.8 ,
+       0.  , 0.8 , 0.  , 0.3 , 0.  , 0.3 , 0.  , 1.  , 0.55, 0.  , 0.55,
+       0.3 , 0.3 , 0.3 , 0.  , 0.3 , 0.  , 0.3 , 0.8 , 1.  , 0.  , 0.3 ,
+       1.  , 0.8 , 0.  , 0.55, 0.55, 0.8 , 0.  , 0.8 , 1.  , 1.  , 0.  ,
+       0.  , 0.  , 0.8 , 0.55, 0.3 , 0.  , 0.55, 1.  , 0.55, 1.  , 0.3 ,
+       0.55, 0.  , 1.  , 0.  , 1.  , 0.  , 0.55, 1.  , 1.  , 0.55, 0.8 ,
+       1.  , 0.8 , 1.  , 0.3 , 0.  , 0.  , 1.  , 1.  , 0.55, 0.3 , 0.55,
+       0.55, 0.3 , 0.3 , 0.8 , 0.3 , 0.  , 0.3 , 1.  , 0.3 , 0.8 , 0.3 ,
+       0.3 , 0.  , 1.  , 1.  , 0.  , 0.3 , 0.3 , 0.8 , 1.  , 0.3 , 0.8 ,
+       1.  , 0.8 , 0.  , 0.55, 0.8 , 0.55, 0.8 , 1.  , 0.  , 0.3 , 0.8 ,
+       0.55, 0.3 , 0.8 , 0.3 , 0.8 , 0.  , 0.8 , 0.8 , 1.  , 0.8 , 1.  ,
+       0.  , 0.55, 0.3 , 0.3 , 0.55, 0.3 , 0.3 , 1.2 , 0.8 , 0.  , 1.  ,
+       0.  , 0.  , 0.55, 0.8 , 0.3 , 0.55, 1.  , 0.3 , 0.55, 1.4 , 0.8 ,
+       0.3 , 0.8 , 0.8 , 0.8 , 0.55, 0.8 , 1.  , 0.55, 0.  , 0.8 , 0.8 ,
+       0.3 , 0.55, 0.  , 0.  , 0.8 , 0.3 , 0.8 , 1.  , 2.  , 0.55, 0.55,
+       0.55, 0.8 , 0.8 , 1.6 , 1.  , 0.55, 0.  , 0.55, 0.55, 1.  , 1.  ,
+       0.55, 0.  , 0.  , 0.8 , 0.  , 2.45, 0.55, 0.8 , 0.55, 0.55, 0.3 ,
+       0.55, 0.8 , 0.3 , 0.55, 0.3 , 0.55, 0.3 , 0.3 , 0.55, 1.  , 0.  ,
+       0.8 , 1.  , 1.  , 0.55, 0.8 ])
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="average-time-spent-per-patient">
+<h3><strong>Average time spent per patient</strong><a class="headerlink" href="#average-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<p>Now we can compute some statistics over the time spent in patients, like for example the average time spent per patient.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.6000000000000005
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="max-time-spent-per-patient">
+<h3><strong>Max time spent per patient</strong><a class="headerlink" href="#max-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<p>The maximum time spent in a single patient is enforced by <span class="math notranslate nohighlight">\(h_4\)</span> constriant, that in this case has been fixed to <span class="math notranslate nohighlight">\(4\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">)</span> <span class="c1"># 4 hours</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>4.000000000000008
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="min-time-spent-per-patient">
+<h3><strong>Min time spent per patient</strong><a class="headerlink" href="#min-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<p>The minimun time spent in a single patient is set by <span class="math notranslate nohighlight">\(h_3^{12}\)</span>, in this case, that has been fixed to <span class="math notranslate nohighlight">\(0.1\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="median-of-time-spent-per-patient">
+<h3><strong>Median of time spent per patient</strong><a class="headerlink" href="#median-of-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.55
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quantile-of-time-spent-per-patient">
+<h3><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong><a class="headerlink" href="#quantile-of-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.8
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="quantile-time-spent-per-patient">
+<h3><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong><a class="headerlink" href="#quantile-time-spent-per-patient" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0.3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="number-of-patients-seen">
+<h3><strong>Number of patients seen</strong><a class="headerlink" href="#number-of-patients-seen" title="Link to this heading">#</a></h3>
+<p>The number of patients seen is <span class="math notranslate nohighlight">\(p=500\)</span> even though we have set <span class="math notranslate nohighlight">\(h_3^{12}=0\)</span>, so the new constraint is working well. In addition, we can see as the number of patient seen match with <span class="math notranslate nohighlight">\(\sum_{j=1}^p y_j\)</span>, which is something that must always be fulfilled in this new version of the problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">total_times_per_patient</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>396
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="n">y_optimal</span><span class="o">.</span><span class="n">values</span><span class="p">()))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>500.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="comparison-with-the-integer-not-relaxed-model">
+<h2><strong>Comparison with the integer (not relaxed) model</strong><a class="headerlink" href="#comparison-with-the-integer-not-relaxed-model" title="Link to this heading">#</a></h2>
+<p>If the binary variable <span class="math notranslate nohighlight">\(y_j\)</span> in the integer model is relaxed in the interval <span class="math notranslate nohighlight">\([0,1]\subset \mathbb{R}\)</span>, no changes are produced, since <span class="math notranslate nohighlight">\(y_j\)</span> carries on working as a binary variable, so it is still performing like it did in the non relaxed integer model.</p>
+<p>However, if <span class="math notranslate nohighlight">\(y_j\)</span> is relaxed to <span class="math notranslate nohighlight">\(\mathbb{R}^+\)</span> (positive real numbers), then the results of the relaxed model are slightly different to those of the non relaxed, concretely the number of patient seen <span class="math notranslate nohighlight">\((396)\)</span> is not maximum <span class="math notranslate nohighlight">\((p=500)\)</span>, so the particular new constraint of this model (with respect to the linear one) is not working, since it is not enforcing the number of patients seen to be equal to <span class="math notranslate nohighlight">\(p\)</span>, and this is because <span class="math notranslate nohighlight">\(y_j\)</span> is not working as a binary variable, and, therefore, it is not longer useful to impose that condition.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Dimensionality_Analysis.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Dimensionality analysis</strong></p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#relaxed-integer-problem"><strong>Relaxed integer problem</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#comparison-with-the-integer-not-relaxed-model"><strong>Comparison with the integer (not relaxed) model</strong></a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fabio Scielzo Ortiz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

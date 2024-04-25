@@ -1,0 +1,1524 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="./" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Dimensionality analysis &#8212; Hospital Management</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="_static/styles/theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/bootstrap.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+<link href="_static/styles/pydata-sphinx-theme.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+
+  
+  <link href="_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=8d27b9dea8ad943066ae" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
+    <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
+    <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae" />
+<link rel="preload" as="script" href="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae" />
+  <script src="_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=8d27b9dea8ad943066ae"></script>
+
+    <script src="_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="_static/copybutton.js?v=f281be69"></script>
+    <script src="_static/scripts/sphinx-book-theme.js?v=efea14e4"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="_static/togglebutton.js?v=4a39c7ea"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="_static/design-tabs.js?v=36754332"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Dimensionality_Analysis';</script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Modeling the problem as a Relaxed Integer Problem" href="Relaxed_Integer_Problem.html" />
+    <link rel="prev" title="Modeling the problem as an Integer Problem" href="Integer_Problem.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <header class="bd-header navbar navbar-expand-lg bd-navbar">
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="_static/logo.jpg" class="logo__image only-light" alt="Hospital Management - Home"/>
+    <script>document.write(`<img src="_static/logo.jpg" class="logo__image only-dark" alt="Hospital Management - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+ <script>
+ document.write(`
+   <button class="btn navbar-btn search-button-field search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <span class="search-button__default-text">Search</span>
+    <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+   </button>
+ `);
+ </script></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="intro.html">
+                    Hospital Management
+                </a>
+            </li>
+        </ul>
+        <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Linear_Problem.html"><strong>Modeling the problem as a Linear Problem</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Integer_Problem.html"><strong>Modeling the problem as an Integer Problem</strong></a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#"><strong>Dimensionality analysis</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Relaxed_Integer_Problem.html"><strong>Modeling the problem as a Relaxed Integer Problem</strong></a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Hospital_Management" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/FabioScielzoOrtiz/Hospital_Management/issues/new?title=Issue%20on%20page%20%2FDimensionality_Analysis.html&body=Your%20issue%20content%20here." target="_blank"
+   class="btn btn-sm btn-source-issues-button dropdown-item"
+   title="Open an issue"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-lightbulb"></i>
+  </span>
+<span class="btn__text-container">Open issue</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="_sources/Dimensionality_Analysis.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Dimensionality analysis</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section id="dimensionality-analysis">
+<h1><strong>Dimensionality analysis</strong><a class="headerlink" href="#dimensionality-analysis" title="Link to this heading">#</a></h1>
+<section id="analysis-of-n-p-combination-of-parameters">
+<h2><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong><a class="headerlink" href="#analysis-of-n-p-combination-of-parameters" title="Link to this heading">#</a></h2>
+<p><span class="math notranslate nohighlight">\(n:= \)</span> number of nurse-doctor tandem that  the hospital has in a given day.</p>
+<p><span class="math notranslate nohighlight">\(p:=\)</span> number of patients that visit the hospital in a given day.</p>
+<p>In this section we will carry out a big data analysis of the linear model, in the sense that we will analyze how the model performs with big dimensionality (big <span class="math notranslate nohighlight">\((n,p)\)</span> combinations). We will don’t apply this analysis to the integer model because the same results in terms of time would be obtained, so it wouldn’t be very fruitful.</p>
+<p>On one hand, we are going to analyze the execution time of the model for those combinations. And, on the other hand, we will analyze the metrics seen before, focusing on these parameters.</p>
+<ul class="simple">
+<li><p>Enforcing the number of patients seen to be the maximum possible <span class="math notranslate nohighlight">\((p)\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} &gt; h_3^{12} &gt; \dots &gt; h_3^{12} &gt; 0\)</span>.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the values of the rest of parameters and setting h3_1_2, h3_3_4, h3_5_6, h3_7_8, h3_9_10 as None.</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h1&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">6</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h2&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_1_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.1</span> 
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_3_4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.30</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_5_6&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.55</span>  
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_7_8&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.80</span> 
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_9_10&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> 
+
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Defining the parameter combination values as a list.</span>
+<span class="n">p_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">]</span>
+<span class="n">n_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">700</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">w_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_list</span><span class="p">}</span>
+<span class="n">param_combi_list_1</span> <span class="o">=</span> <span class="n">product</span><span class="p">(</span><span class="n">n_list</span><span class="p">,</span> <span class="n">p_list</span><span class="p">)</span>
+<span class="n">param_combi_list_1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">param_combi_list_1</span><span class="p">)</span>
+<span class="n">param_combi_list_2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">,</span> <span class="n">w_dict</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+
+<span class="c1"># Defining the parameter names as a tuple.</span>
+<span class="n">param_names</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results1_multi = get_results1_multi((&#39;n&#39;, &#39;p&#39;, &#39;w&#39;), param_combi_list_2, params, model=&#39;linear&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results2_multi = get_results2_multi((&#39;n&#39;, &#39;p&#39;, &#39;w&#39;), results1_multi, n_p_analysis=True, w_dict=w_dict)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save a dictionary as a pickle</span>
+<span class="c1">#with open(&#39;results1_multi_n_p.pickle&#39;, &#39;wb&#39;) as file:</span>
+    <span class="c1"># Use pickle&#39;s dump function to write the dict to the opened file.</span>
+    <span class="c1">#pickle.dump(results1_multi, file)</span>
+
+<span class="c1">#with open(&#39;results2_multi_n_p.pickle&#39;, &#39;wb&#39;) as file:</span>
+    <span class="c1"># Use pickle&#39;s dump function to write the dict to the opened file.</span>
+    <span class="c1">#pickle.dump(results2_multi, file)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open a dictionary saved as a pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C:\Users\fscielzo\Documents\Large-Data\Optimization\results1_multi_n_p.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="c1"># Read back the pickled file</span>
+    <span class="n">results1_multi</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="c1"># Open a dictionary saved as a pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C:\Users\fscielzo\Documents\Large-Data\Optimization\results2_multi_n_p.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="c1"># Read back the pickled file</span>
+    <span class="n">results2_multi</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="c1"># Time: 2.45 - 3.21 mins</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">problem_dimension_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;k&#39;</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">problem_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">patient_tandem_ratio_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span> <span class="c1"># number patients per nurse-doctor tandem</span>
+
+<span class="n">param_combi_feasible</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">param_combi_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">problem_dimension_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;k&#39;</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">patient_tandem_ratio_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Model execution time vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">results1_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;model_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">],</span> 
+                     <span class="n">x</span><span class="o">=</span><span class="n">param_combi_str</span><span class="p">,</span> 
+                     <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model execution time vs $(n, p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n, p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Model execution time (secs)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/eb0831d90b0bebdab530bf8880fca8fd2ebbb780ecd282215918e63c7a127bde.png" src="_images/eb0831d90b0bebdab530bf8880fca8fd2ebbb780ecd282215918e63c7a127bde.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Model execution time vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">results1_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;model_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">],</span> 
+                     <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_str</span><span class="p">,</span> 
+                     <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model execution time vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Model execution time (secs)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ae4fae021316cac71088ca9458d0b99aaad600dd249c1005dbe1e78d761a899b.png" src="_images/ae4fae021316cac71088ca9458d0b99aaad600dd249c1005dbe1e78d761a899b.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>These results  have an easy and intuitive interpretation.</p>
+<p>When the dimensionality of the problem increase (in this case <span class="math notranslate nohighlight">\(n\cdot p\)</span>), the execution time of the model increases as well. And vice versa.</p>
+<ul class="simple">
+<li><p><strong>Type vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Type vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/f4d8f86a654f11477716484b671c632b7aa36867c8afbebd26b49740a9677c27.png" src="_images/f4d8f86a654f11477716484b671c632b7aa36867c8afbebd26b49740a9677c27.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Type vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Type vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bcb074b692c3dece2674b8c3a9af9527ad3b5af5fcb2410dcac1316a38db5b93.png" src="_images/bcb074b692c3dece2674b8c3a9af9527ad3b5af5fcb2410dcac1316a38db5b93.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Type vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">patient_tandem_ratio_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Type vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">patient_tandem_ratio_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8886b930020bb7cdd5c04bf3729ab0a3578d5ba68b8586f32afa89e68e628a9e.png" src="_images/8886b930020bb7cdd5c04bf3729ab0a3578d5ba68b8586f32afa89e68e628a9e.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>When the ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> is large enough, the problem becomes not feasible, as there are not enough tandems to handle such amount of patients, since minimum work constrains cannot be satisfy under good working conditions.</p>
+<ul class="simple">
+<li><p><strong>Number of patients seen vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;num_patients_seen&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of patients seen vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;number of patients seen&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5500</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/9b37e6c2ff4b95c7a45655bb9bb7ef8c280d175e179e700bdf1a8d202fb00470.png" src="_images/9b37e6c2ff4b95c7a45655bb9bb7ef8c280d175e179e700bdf1a8d202fb00470.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>Since we have enforced the number of patients seen to be as much as possible <span class="math notranslate nohighlight">\((=p)\)</span>, the results are coherent with that.</p>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(f\)</span> optimal vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;f_optimal_feasible&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span>
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;$f$ optimal vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f$ optimal&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="c1"># plt.yticks(np.arange(2100, 2550, 50), fontsize=11)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/a8fbf0882b330fbc59507b84e6a6faed1fe341ab43c768cb0c21447251d6dc69.png" src="_images/a8fbf0882b330fbc59507b84e6a6faed1fe341ab43c768cb0c21447251d6dc69.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(f\)</span> optimal vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;f_optimal_feasible&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span>
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;$f$ optimal vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f$ optimal&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="c1"># plt.yticks(np.arange(2100, 2550, 50), fontsize=11)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8d31a56a1d6317e734dae72b546973cd6a07fea987398dc571f3ea2f44c1599b.png" src="_images/8d31a56a1d6317e734dae72b546973cd6a07fea987398dc571f3ea2f44c1599b.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>The more dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span>, the higher optimal value of the objective function.</p>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2c3c440b67d7d12fafed3de286e31c1fa5814394d67cab44ebcb6d80d60e12f9.png" src="_images/2c3c440b67d7d12fafed3de286e31c1fa5814394d67cab44ebcb6d80d60e12f9.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/45296418f52f7333701f56eb3647cff984ab4b668b7611bac9307bcc00d9a8e3.png" src="_images/45296418f52f7333701f56eb3647cff984ab4b668b7611bac9307bcc00d9a8e3.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ba559c40c0025a10a234aa8bd617ac371320e11487440541722b7ee1e9c5f0e5.png" src="_images/ba559c40c0025a10a234aa8bd617ac371320e11487440541722b7ee1e9c5f0e5.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>The interpretation is simple and makes perfect sense. When the ration patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> increases, the average time spent per patient decrease. and vice versa.</p>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">combi</span> <span class="ow">in</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">combi</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$(n,p)$ combination </span><span class="si">{</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$(n,p)$ combination&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.39</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/999fa4d0c45251b8d3b4643dfcb1f6e565e5de921f74fe5b01e424bd14f55196.png" src="_images/999fa4d0c45251b8d3b4643dfcb1f6e565e5de921f74fe5b01e424bd14f55196.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">combi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1"># ax.set_title(f&#39;$n\cdot p$ {limits[i]}:{limits[i+1]}&#39;, fontsize=13)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$n\cdot p$&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.30</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/1581a6ce9ab428b717a7a8aae57b638cfc3d0e9385f9390d40af5df97f250b38.png" src="_images/1581a6ce9ab428b717a7a8aae57b638cfc3d0e9385f9390d40af5df97f250b38.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Average time spent per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">combi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1"># ax.set_title(f&#39;$p/n$  {limits[i]}:{limits[i+1]}&#39;, fontsize=13)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$p/n$&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.30</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/5af51fefbc1e0b2d7560f679e8e797de13092b401802eee2260e208264113810.png" src="_images/5af51fefbc1e0b2d7560f679e8e797de13092b401802eee2260e208264113810.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>When the ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> decreases, the average time spent per patient increases according with their severity.</p>
+<p>Another important point to highlight is that, when  ratio patients per tandem  is small enough, like for intance with <span class="math notranslate nohighlight">\(p/n = 0.33\)</span> (red line, first plot), all the patients are seen as much as possible <span class="math notranslate nohighlight">\((h_4 =4)\)</span>, regardless of their severity. And, when the ratio increases, the average time spent in the less severe patients starts to decrease, as for example with <span class="math notranslate nohighlight">\(p/n = 2\)</span> (blue line, first plot), <span class="math notranslate nohighlight">\(p/n=2.86\)</span>, (green line, third plot) or <span class="math notranslate nohighlight">\(p/n=6\)</span> (yellow line, first plot).</p>
+<section id="allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">
+<h3>Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.<a class="headerlink" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0" title="Link to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the values of the rest of parameters and setting h3_1_2, h3_3_4, h3_5_6, h3_7_8, h3_9_10 as None.</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;n&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;p&#39;</span><span class="p">]</span><span class="o">=</span><span class="kc">None</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h1&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">6</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h2&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">1</span> <span class="p">;</span> <span class="n">params</span><span class="p">[</span><span class="s1">&#39;h4&#39;</span><span class="p">]</span><span class="o">=</span><span class="mi">4</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_1_2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span> 
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_3_4&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_5_6&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.55</span>  
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_7_8&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mf">0.80</span> 
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;h3_9_10&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span> 
+
+<span class="n">params</span><span class="p">[</span><span class="s1">&#39;w&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="kc">None</span>
+
+<span class="c1"># Defining the parameter combination values as a list.</span>
+<span class="n">p_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">100</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">2000</span><span class="p">,</span> <span class="mi">5000</span><span class="p">]</span>
+<span class="n">n_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">50</span><span class="p">,</span> <span class="mi">300</span><span class="p">,</span> <span class="mi">700</span><span class="p">]</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">123</span><span class="p">)</span>
+<span class="n">w_dict</span> <span class="o">=</span> <span class="p">{</span><span class="n">p</span><span class="p">:</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">p_list</span><span class="p">}</span>
+<span class="n">param_combi_list_1</span> <span class="o">=</span> <span class="n">product</span><span class="p">(</span><span class="n">n_list</span><span class="p">,</span> <span class="n">p_list</span><span class="p">)</span>
+<span class="n">param_combi_list_1</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">param_combi_list_1</span><span class="p">)</span>
+<span class="n">param_combi_list_2</span> <span class="o">=</span> <span class="p">[(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">,</span> <span class="n">w_dict</span><span class="p">[</span><span class="n">p</span><span class="p">])</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+
+<span class="c1"># Defining the parameter names as a tuple.</span>
+<span class="n">param_names</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;n&#39;</span><span class="p">,</span> <span class="s1">&#39;p&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results1_multi = get_results1_multi((&#39;n&#39;, &#39;p&#39;, &#39;w&#39;), param_combi_list_2, params, model=&#39;linear&#39;)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># results2_multi = get_results2_multi((&#39;n&#39;, &#39;p&#39;, &#39;w&#39;), results1_multi, n_p_analysis=True, w_dict=w_dict)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># save a dictionary as a pickle</span>
+<span class="c1">#with open(&#39;results1_multi_n_p_2.pickle&#39;, &#39;wb&#39;) as file:</span>
+    <span class="c1"># Use pickle&#39;s dump function to write the dict to the opened file.</span>
+    <span class="c1">#pickle.dump(results1_multi, file)</span>
+
+<span class="c1">#with open(&#39;results2_multi_n_p_2.pickle&#39;, &#39;wb&#39;) as file:</span>
+    <span class="c1"># Use pickle&#39;s dump function to write the dict to the opened file.</span>
+    <span class="c1">#pickle.dump(results2_multi, file)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Open a dictionary saved as a pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C:\Users\fscielzo\Documents\Large-Data\Optimization\results1_multi_n_p_2.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="c1"># Read back the pickled file</span>
+    <span class="n">results1_multi</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+
+<span class="c1"># Open a dictionary saved as a pickle</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">r</span><span class="s2">&quot;C:\Users\fscielzo\Documents\Large-Data\Optimization\results2_multi_n_p_2.pickle&quot;</span><span class="p">,</span> <span class="s1">&#39;rb&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+    <span class="c1"># Read back the pickled file</span>
+    <span class="n">results2_multi</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+<span class="c1"># Time: 4 - 6.41 mins</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">problem_dimension_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;k&#39;</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">problem_dimension</span> <span class="o">=</span> <span class="p">[</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">patient_tandem_ratio_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span> <span class="c1"># number patients per nurse-doctor tandem</span>
+
+<span class="n">param_combi_feasible</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">param_combi_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">problem_dimension_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">n</span><span class="o">*</span><span class="n">p</span><span class="o">/</span><span class="mi">1000</span><span class="p">))</span><span class="o">+</span><span class="s1">&#39;k&#39;</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span>
+<span class="n">patient_tandem_ratio_feasible_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="nb">round</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">n</span><span class="p">,</span> <span class="mi">2</span><span class="p">))</span> <span class="k">for</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span><span class="n">p</span><span class="p">)</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]]</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Model execution time vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">results1_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;model_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]],</span> 
+                     <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> 
+                     <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model execution time vs $(n, p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n, p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Model execution time (secs)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/890dc02e2b9721902efbd79538bbc83f352a72bb04fa98c714aad01f75ee9280.png" src="_images/890dc02e2b9721902efbd79538bbc83f352a72bb04fa98c714aad01f75ee9280.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Model execution time vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="p">[</span><span class="n">results1_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="n">i</span><span class="p">][</span><span class="s1">&#39;model_time&#39;</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">],</span> 
+                     <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_str</span><span class="p">,</span> 
+                     <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Model execution time vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Model execution time (secs)&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">500</span><span class="p">,</span> <span class="mi">50</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/7df0b3a5690319cfba3ee00f8bc674a9c4c47e453b1d2e70e1f7b6411a3a5941.png" src="_images/7df0b3a5690319cfba3ee00f8bc674a9c4c47e453b1d2e70e1f7b6411a3a5941.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>These results  have an easy and intuitive interpretation.</p>
+<p>When the dimensionality of the problem increase (in this case <span class="math notranslate nohighlight">\(n\cdot p\)</span>), the execution time of the model increases as well. And vice versa.</p>
+<ul class="simple">
+<li><p><strong>Type vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;type vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/dd35d3c29a69cdd56c1e6ab4fc98a9e5e7342649c15a5047ed97db515ce2e512.png" src="_images/dd35d3c29a69cdd56c1e6ab4fc98a9e5e7342649c15a5047ed97db515ce2e512.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Type vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Type vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/bcb074b692c3dece2674b8c3a9af9527ad3b5af5fcb2410dcac1316a38db5b93.png" src="_images/bcb074b692c3dece2674b8c3a9af9527ad3b5af5fcb2410dcac1316a38db5b93.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Type vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">9</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">param_combi_str</span> <span class="o">=</span> <span class="p">[</span><span class="nb">str</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">param_combi_list_1</span><span class="p">]</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;type&#39;</span><span class="p">],</span> <span class="n">x</span><span class="o">=</span><span class="n">patient_tandem_ratio_str</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Type vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;type&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">patient_tandem_ratio_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/8886b930020bb7cdd5c04bf3729ab0a3578d5ba68b8586f32afa89e68e628a9e.png" src="_images/8886b930020bb7cdd5c04bf3729ab0a3578d5ba68b8586f32afa89e68e628a9e.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>When the ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> is large enough, the problem becomes not feasible, as there are not enough tandems to handle such amount of patients, since minimum work constrains cannot be satisfy under good working conditions.</p>
+<ul class="simple">
+<li><p><strong>Number of patients seen vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;num_patients_seen&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Number of patients seen vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;number of patients seen&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span> <span class="mi">5500</span><span class="p">,</span> <span class="mi">500</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/3fb8c1a0ae0ae536f4ea124d429a966a9a75dc8324e4cc323fde2bdf8fab92df.png" src="_images/3fb8c1a0ae0ae536f4ea124d429a966a9a75dc8324e4cc323fde2bdf8fab92df.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>Since we haven’t enforced the number of patients seen to be <span class="math notranslate nohighlight">\(p\)</span>, due to the fact that we have set <span class="math notranslate nohighlight">\(h_3^{12}=h_3^{34} = 0\)</span>, there are cases in which the number of patients seen is lower than the maximum <span class="math notranslate nohighlight">\((&lt;p)\)</span>.</p>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(f\)</span> optimal vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;f_optimal_feasible&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span>
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;$f$ optimal vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f$ optimal&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="c1"># plt.yticks(np.arange(2100, 2550, 50), fontsize=11)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/fd8fe69290b0660aeedd89dd21c29cd3f7b242a38b23ce766362dce79b9c452d.png" src="_images/fd8fe69290b0660aeedd89dd21c29cd3f7b242a38b23ce766362dce79b9c452d.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong><span class="math notranslate nohighlight">\(f\)</span> optimal vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;f_optimal_feasible&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span>
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;$f$ optimal vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;$f$ optimal&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="c1"># plt.yticks(np.arange(2100, 2550, 50), fontsize=11)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/12fe6e56ea9133164f3108cddc1614dbe2f283ca0f84ce9610372562605b7a59.png" src="_images/12fe6e56ea9133164f3108cddc1614dbe2f283ca0f84ce9610372562605b7a59.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>The more dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span>, the higher optimal value of the objective function.</p>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;$(n,p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">param_combi_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">90</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2c3c440b67d7d12fafed3de286e31c1fa5814394d67cab44ebcb6d80d60e12f9.png" src="_images/2c3c440b67d7d12fafed3de286e31c1fa5814394d67cab44ebcb6d80d60e12f9.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/45296418f52f7333701f56eb3647cff984ab4b668b7611bac9307bcc00d9a8e3.png" src="_images/45296418f52f7333701f56eb3647cff984ab4b668b7611bac9307bcc00d9a8e3.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_per_patient&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">x</span><span class="o">=</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">,</span> 
+                  <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mf">7.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">15</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/ba559c40c0025a10a234aa8bd617ac371320e11487440541722b7ee1e9c5f0e5.png" src="_images/ba559c40c0025a10a234aa8bd617ac371320e11487440541722b7ee1e9c5f0e5.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>The interpretation is simple and makes perfect sense. When the ration patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> increases, the average time spent per patient decrease. and vice versa.</p>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs <span class="math notranslate nohighlight">\((n,p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">combi</span> <span class="ow">in</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]]</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="nb">str</span><span class="p">(</span><span class="n">combi</span><span class="p">),</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;$(n,p)$ combination </span><span class="si">{</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">:</span><span class="si">{</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">13</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$(n,p)$ combination&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.39</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs $(n,p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/02da50345783a033f717dd79635b7808165011df75a5b60383a9843b8f14cedb.png" src="_images/02da50345783a033f717dd79635b7808165011df75a5b60383a9843b8f14cedb.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Avg. time per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs Problem dimensionality <span class="math notranslate nohighlight">\((n\cdot p)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">4</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">combi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">problem_dimension_feasible_str</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1"># ax.set_title(f&#39;$n\cdot p$ {limits[i]}:{limits[i+1]}&#39;, fontsize=13)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$n\cdot p$&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.30</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs Problem dimensionality $(n\cdot p)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/2c8a4ab089114809fffa11225b454795bc0f254f92ef4c738507fa70f868f943.png" src="_images/2c8a4ab089114809fffa11225b454795bc0f254f92ef4c738507fa70f868f943.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Average time spent per patient vs <span class="math notranslate nohighlight">\(w\)</span> vs Ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span></strong></p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">n_cols</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">interval_width</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">5</span><span class="p">)</span>
+
+<span class="n">limits</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]),</span> <span class="n">interval_width</span><span class="p">))</span>
+<span class="n">limits</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;feasible&#39;</span><span class="p">]))</span>
+<span class="n">n_intervals</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">limits</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span>
+
+<span class="c1"># Define the number of rows and columns for the matrix plot</span>
+<span class="n">n_rows</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">ceil</span><span class="p">(</span><span class="n">n_intervals</span> <span class="o">/</span> <span class="n">n_cols</span><span class="p">))</span>
+
+<span class="c1"># Create a subplot with the specified number of rows and columns</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">n_rows</span><span class="p">,</span> <span class="n">n_cols</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="n">figsize</span><span class="p">)</span>
+
+<span class="c1"># Flatten the axes array to make it easier to iterate</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>  
+
+<span class="c1"># Defining a ecdf-plot for each variable considered.</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_intervals</span><span class="p">)</span> <span class="p">:</span>
+
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">axes</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>  <span class="c1"># Get the current axis</span>
+    <span class="c1">#ax.figure(figsize=(20, 10))</span>
+    <span class="k">for</span> <span class="n">label</span><span class="p">,</span> <span class="n">combi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">patient_tandem_ratio_feasible_str</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]],</span> <span class="n">param_combi_feasible</span><span class="p">[</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="p">]:</span><span class="n">limits</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]])</span> <span class="p">:</span>
+        <span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> 
+                         <span class="n">x</span><span class="o">=</span><span class="n">results2_multi</span><span class="p">[</span><span class="n">param_names</span><span class="p">][</span><span class="s1">&#39;avg_time_patient_per_w&#39;</span><span class="p">][</span><span class="n">combi</span><span class="p">]</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> 
+                      <span class="n">label</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">markersize</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">)</span>
+    <span class="c1"># ax.set_title(f&#39;$p/n$  {limits[i]}:{limits[i+1]}&#39;, fontsize=13)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">tick_params</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">rotation</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">11</span><span class="p">))</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;w&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s1">&#39;$p/n$&#39;</span><span class="p">,</span> <span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper right&#39;</span><span class="p">,</span> <span class="n">bbox_to_anchor</span><span class="o">=</span><span class="p">(</span><span class="mf">1.30</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">11</span><span class="p">,</span> <span class="n">ncol</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Remove any unused subplots in case the number of &#39;geo&#39; values is less than num_rows * num_cols</span>
+<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_intervals</span><span class="p">,</span> <span class="n">n_rows</span><span class="o">*</span><span class="n">n_cols</span><span class="p">):</span>
+    <span class="n">fig</span><span class="o">.</span><span class="n">delaxes</span><span class="p">(</span><span class="n">axes</span><span class="p">[</span><span class="n">j</span><span class="p">])</span>
+
+<span class="c1"># Establishing a general tittle for the plot.</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Avg. time per patient vs $w$ vs Ratio patients per tandem $(p/n)$&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">15</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.01</span><span class="p">)</span>
+    
+<span class="n">plt</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">hspace</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">wspace</span><span class="o">=</span><span class="mf">0.6</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="_images/0380579958f3d5bd5a4bcaf5d7912f30450cd1276f8c846842d4613c0765fa5e.png" src="_images/0380579958f3d5bd5a4bcaf5d7912f30450cd1276f8c846842d4613c0765fa5e.png" />
+</div>
+</div>
+<p><strong>Interpretation of the results:</strong></p>
+<p>When the ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> decreases, the average time spent per patient increases according with their severity.</p>
+<p>Another important point to highlight is that, when  ratio patients per tandem  is small enough, like for intance with <span class="math notranslate nohighlight">\(p/n = 0.33\)</span> (red line, first plot), all the patients are seen as much as possible <span class="math notranslate nohighlight">\((h_4 =4)\)</span>, regardless of their severity. And, when the ratio increases, the average time spent in the less severe patients starts to decrease, as for example with <span class="math notranslate nohighlight">\(p/n = 2\)</span> (blue line, first plot), <span class="math notranslate nohighlight">\(p/n=2.86\)</span>, (green line, third plot) or <span class="math notranslate nohighlight">\(p/n=6\)</span> (yellow line, first plot).</p>
+<p>If the binary variable <span class="math notranslate nohighlight">\(y_j\)</span> in the integer model is relaxed in the interval <span class="math notranslate nohighlight">\([0,1]\subset \mathbb{R}\)</span>, no changes are produced, since <span class="math notranslate nohighlight">\(y_j\)</span> carries on working as a binary variable, so it is still performing like it did in the non relaxed integer model.</p>
+<p>However, if <span class="math notranslate nohighlight">\(y_j\)</span> is relaxed to <span class="math notranslate nohighlight">\(\mathbb{R}^+\)</span> (positive real numbers), then the results of the relaxed model are slightly different to those of the non relaxed, concretely the number of patient seen <span class="math notranslate nohighlight">\((396)\)</span> is not maximum <span class="math notranslate nohighlight">\((p=500)\)</span>, so the particular new constraint of this model (with respect to the linear one) is not working, since it is not enforcing the number of patients seen to be equal to <span class="math notranslate nohighlight">\(p\)</span>, and this is because <span class="math notranslate nohighlight">\(y_j\)</span> is not working as a binary variable, and, therefore, it is not longer useful to impose that condition.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./."
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Integer_Problem.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title"><strong>Modeling the problem as an Integer Problem</strong></p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Relaxed_Integer_Problem.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Modeling the problem as a Relaxed Integer Problem</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Fabio Scielzo Ortiz
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="_static/scripts/bootstrap.js?digest=8d27b9dea8ad943066ae"></script>
+<script src="_static/scripts/pydata-sphinx-theme.js?digest=8d27b9dea8ad943066ae"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
