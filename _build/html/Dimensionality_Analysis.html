@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -378,10 +378,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a></li>
 </ul>
             </nav>
         </div>
@@ -393,7 +390,7 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section id="dimensionality-analysis">
+  <section class="tex2jax_ignore mathjax_ignore" id="dimensionality-analysis">
 <h1><strong>Dimensionality analysis</strong><a class="headerlink" href="#dimensionality-analysis" title="Link to this heading">#</a></h1>
 <section id="analysis-of-n-p-combination-of-parameters">
 <h2><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong><a class="headerlink" href="#analysis-of-n-p-combination-of-parameters" title="Link to this heading">#</a></h2>
@@ -898,8 +895,7 @@ document.write(`
 <p><strong>Interpretation of the results:</strong></p>
 <p>When the ratio patients per tandem <span class="math notranslate nohighlight">\((p/n)\)</span> decreases, the average time spent per patient increases according with their severity.</p>
 <p>Another important point to highlight is that, when  ratio patients per tandem  is small enough, like for intance with <span class="math notranslate nohighlight">\(p/n = 0.33\)</span> (red line, first plot), all the patients are seen as much as possible <span class="math notranslate nohighlight">\((h_4 =4)\)</span>, regardless of their severity. And, when the ratio increases, the average time spent in the less severe patients starts to decrease, as for example with <span class="math notranslate nohighlight">\(p/n = 2\)</span> (blue line, first plot), <span class="math notranslate nohighlight">\(p/n=2.86\)</span>, (green line, third plot) or <span class="math notranslate nohighlight">\(p/n=6\)</span> (yellow line, first plot).</p>
-<section id="allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">
-<h3>Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.<a class="headerlink" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0" title="Link to this heading">#</a></h3>
+<p><strong>Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span></strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Defining the values of the rest of parameters and setting h3_1_2, h3_3_4, h3_5_6, h3_7_8, h3_9_10 as None.</span>
@@ -1397,7 +1393,6 @@ document.write(`
 <p>However, if <span class="math notranslate nohighlight">\(y_j\)</span> is relaxed to <span class="math notranslate nohighlight">\(\mathbb{R}^+\)</span> (positive real numbers), then the results of the relaxed model are slightly different to those of the non relaxed, concretely the number of patient seen <span class="math notranslate nohighlight">\((396)\)</span> is not maximum <span class="math notranslate nohighlight">\((p=500)\)</span>, so the particular new constraint of this model (with respect to the linear one) is not working, since it is not enforcing the number of patients seen to be equal to <span class="math notranslate nohighlight">\(p\)</span>, and this is because <span class="math notranslate nohighlight">\(y_j\)</span> is not working as a binary variable, and, therefore, it is not longer useful to impose that condition.</p>
 </section>
 </section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1463,10 +1458,7 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#allowing-the-number-of-patients-seen-to-be-lower-than-p-setting-h-3-12-h-3-12-0">Allowing the number of patients seen to be lower than <span class="math notranslate nohighlight">\(p\)</span>, setting <span class="math notranslate nohighlight">\(h_3^{12} = h_3^{12} = 0\)</span>.</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-n-p-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((n,p)\)</span> combination of parameters</strong></a></li>
 </ul>
   </nav></div>
 
