@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="_static/styles/sphinx-book-theme.css?v=384b581d" />
     <link rel="stylesheet" type="text/css" href="_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="_static/design-style.1e8bd061cd6da7fc9cf755528e8ffc24.min.css?v=0a3b3ea7" />
   
@@ -387,32 +387,29 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints"><strong>Constraints</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-problem"><strong>General linear problem</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-with-pyomo"><strong>Solving with <code class="docutils literal notranslate"><span class="pre">Pyomo</span></code></strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w"><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-sensitivity"><strong>Analysis of sensitivity</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-individual-parameters"><strong>Analysis of individual parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-1-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-2-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w"><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong></a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-multiple-parameters"><strong>Analysis of multiple parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-12-h-3-34-h-3-56-h-3-78-h-3-910-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((h_3^{12}, h_3^{34}, h_3^{56}, h_3^{78}, h_3^{910})\)</span> combination of parameters</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-sensitivity"><strong>Analysis of sensitivity</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-individual-parameters"><strong>Analysis of individual parameters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-1-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-2-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong></a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-multiple-parameters"><strong>Analysis of multiple parameters</strong></a></li>
 </ul>
 </li>
 </ul>
@@ -651,8 +648,9 @@ document.write(`
 </div>
 </div>
 </section>
+</section>
 <section id="preliminary-analysis">
-<h3><strong>Preliminary analysis</strong><a class="headerlink" href="#preliminary-analysis" title="Link to this heading">#</a></h3>
+<h2><strong>Preliminary analysis</strong><a class="headerlink" href="#preliminary-analysis" title="Link to this heading">#</a></h2>
 <p>In this section we are going to do a preliminary numerical analysis of the problem posed above, for a given set of parameters.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -675,7 +673,7 @@ document.write(`
 </div>
 </div>
 <section id="optimal-values">
-<h4><strong>Optimal values</strong><a class="headerlink" href="#optimal-values" title="Link to this heading">#</a></h4>
+<h3><strong>Optimal values</strong><a class="headerlink" href="#optimal-values" title="Link to this heading">#</a></h3>
 <p><strong>Decision variables</strong></p>
 <p>The optimal values for the <span class="math notranslate nohighlight">\(t_{ij}\)</span> decision variables for the given set of parameters are the following:</p>
 <div class="cell docutils container">
@@ -1719,7 +1717,7 @@ document.write(`
 </div>
 </section>
 <section id="time-spent-in-patients">
-<h4><strong>Time spent in patients</strong><a class="headerlink" href="#time-spent-in-patients" title="Link to this heading">#</a></h4>
+<h3><strong>Time spent in patients</strong><a class="headerlink" href="#time-spent-in-patients" title="Link to this heading">#</a></h3>
 <p>Now we are going to analyze the time spent in the patients, in this particular case.</p>
 <p>We built a function that computes the time spent seeing patient j in a given day .
 It’s important to notice that a patient could be seen by several nurse-doctor tandems.</p>
@@ -1811,7 +1809,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="average-time-spent-per-patient">
-<h4><strong>Average time spent per patient</strong><a class="headerlink" href="#average-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong>Average time spent per patient</strong><a class="headerlink" href="#average-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <p>Now we can compute some statistics over the time spent in patients, like for example the average time spent per patient.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1827,7 +1825,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="max-time-spent-per-patient">
-<h4><strong>Max time spent per patient</strong><a class="headerlink" href="#max-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong>Max time spent per patient</strong><a class="headerlink" href="#max-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <p>The maximum time spent in a single patient is enforced by <span class="math notranslate nohighlight">\(h_4\)</span> constriant, that in this case has been fixed to <span class="math notranslate nohighlight">\(4\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1843,7 +1841,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="min-time-spent-per-patient">
-<h4><strong>Min time spent per patient</strong><a class="headerlink" href="#min-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong>Min time spent per patient</strong><a class="headerlink" href="#min-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <p>The minimun time spent in a single patient is set by <span class="math notranslate nohighlight">\(h_3^{12}\)</span>, in this case, that has been fixed to <span class="math notranslate nohighlight">\(0.1\)</span>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1871,7 +1869,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="median-of-time-spent-per-patient">
-<h4><strong>Median of time spent per patient</strong><a class="headerlink" href="#median-of-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong>Median of time spent per patient</strong><a class="headerlink" href="#median-of-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">)</span> 
@@ -1886,7 +1884,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="quantile-of-time-spent-per-patient">
-<h4><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong><a class="headerlink" href="#quantile-of-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong><a class="headerlink" href="#quantile-of-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">,</span> <span class="mf">0.75</span><span class="p">)</span>
@@ -1901,7 +1899,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="quantile-time-spent-per-patient">
-<h4><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong><a class="headerlink" href="#quantile-time-spent-per-patient" title="Link to this heading">#</a></h4>
+<h3><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong><a class="headerlink" href="#quantile-time-spent-per-patient" title="Link to this heading">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">total_times_per_patient</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)</span>
@@ -1916,7 +1914,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </section>
 <section id="number-of-patients-seen">
-<h4><strong>Number of patients seen</strong><a class="headerlink" href="#number-of-patients-seen" title="Link to this heading">#</a></h4>
+<h3><strong>Number of patients seen</strong><a class="headerlink" href="#number-of-patients-seen" title="Link to this heading">#</a></h3>
 <p>Another interesting statistic to compute is the number of patients seen. This can be calculated as the number of non zero values in the array <code class="docutils literal notranslate"><span class="pre">total_times_per_patient</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1933,7 +1931,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 <p>In this case, all the patients has been seen, what is coherent with the <span class="math notranslate nohighlight">\(h_3\)</span> constraints that we have imposed in this case, since <span class="math notranslate nohighlight">\(h_3^{12} &gt; \dots &gt; h_3^{910} &gt; 0\)</span>.</p>
 </section>
 <section id="relation-between-time-spent-per-patient-and-the-severity-importance-w">
-<h4><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong><a class="headerlink" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w" title="Link to this heading">#</a></h4>
+<h3><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong><a class="headerlink" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w" title="Link to this heading">#</a></h3>
 <p>We can do a simple analysis of the relationship between the time spent per patient and the severity/importance of the patient.</p>
 <p>For example, we can compute the Pearson linear correlation coefficient between this two variables.</p>
 <div class="cell docutils container">
@@ -1970,7 +1968,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </section>
 </section>
 <section id="analysis-of-sensitivity">
-<h3><strong>Analysis of sensitivity</strong><a class="headerlink" href="#analysis-of-sensitivity" title="Link to this heading">#</a></h3>
+<h2><strong>Analysis of sensitivity</strong><a class="headerlink" href="#analysis-of-sensitivity" title="Link to this heading">#</a></h2>
 <p>In this section we are going to carry out a sensitivity analysis.</p>
 <p>Typically, sensitivity analysis is done in <code class="docutils literal notranslate"><span class="pre">Pyomo</span></code> using the dual version of the problem and analyzing the output of <code class="docutils literal notranslate"><span class="pre">model.pprint()</span></code>. But this output is too large in this case, what make impossible any fruitful interpretation. Besides, this output only tell us about how the optimal value of the objective function varies when the parameter of an specific constraints varies in one unit (marginally).</p>
 <p>However, in this project we are going to assume a broad concept of sensitivity analysis. Specifically what we understand on sensitivity analysis is, basically, an analysis on the influence of the model parameters, that is, how they affect to some important metric of the problem, such as whether it is feasible or not, the objective function, the average time spent per patients, and so on.</p>
@@ -1983,7 +1981,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </div>
 <section id="analysis-of-individual-parameters">
-<h4><strong>Analysis of individual parameters</strong><a class="headerlink" href="#analysis-of-individual-parameters" title="Link to this heading">#</a></h4>
+<h3><strong>Analysis of individual parameters</strong><a class="headerlink" href="#analysis-of-individual-parameters" title="Link to this heading">#</a></h3>
 <p>In this section we make a sensitivity analysis of some of the parameters of the problem, following an individual approach, in the sense that each parameter will be analyzed separately.</p>
 <p>This analysis is essentially carried out using the function <code class="docutils literal notranslate"><span class="pre">get_results1</span></code> and <code class="docutils literal notranslate"><span class="pre">get_results2</span></code>.</p>
 <div class="cell docutils container">
@@ -2093,7 +2091,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </div>
 </div>
 <section id="analysis-of-h-1-parameter">
-<h5><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-1-parameter" title="Link to this heading">#</a></h5>
+<h4><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-1-parameter" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(h_1 :=\)</span> maximum time seeing patients per nurse-doctor tandem in a given day.</p></li>
 </ul>
@@ -2346,7 +2344,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 </ul>
 </section>
 <section id="analysis-of-h-2-parameter">
-<h5><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-2-parameter" title="Link to this heading">#</a></h5>
+<h4><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-2-parameter" title="Link to this heading">#</a></h4>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(h_2 :=\)</span> maximum time spent by nurse-doctor tandem <span class="math notranslate nohighlight">\(i\)</span> seeing the patient <span class="math notranslate nohighlight">\(j\)</span>, for all <span class="math notranslate nohighlight">\(i,j\)</span>.</p></li>
 </ul>
@@ -2569,7 +2567,7 @@ It’s important to notice that a patient could be seen by several nurse-doctor 
 <p>As final conclusion we can say that <span class="math notranslate nohighlight">\(h_2\)</span> is not an important parameter, at least considering the values defined for the rest of parameters.</p>
 </section>
 <section id="analysis-of-h-3-parameter">
-<h5><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-3-parameter" title="Link to this heading">#</a></h5>
+<h4><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong><a class="headerlink" href="#analysis-of-h-3-parameter" title="Link to this heading">#</a></h4>
 <p><span class="math notranslate nohighlight">\(h_3 :=\)</span>  minimum time time spent in each patient, taking into account their severity/importance (this quantity depends on <span class="math notranslate nohighlight">\(w_j\)</span>).</p>
 <p><strong>Analysis of <span class="math notranslate nohighlight">\(h_3^{12}\)</span> parameter</strong></p>
 <p><span class="math notranslate nohighlight">\(h_3^{12} :=\)</span>  minimum time time spent in patients with <span class="math notranslate nohighlight">\(w_j \in \lbrace 1, 2 \rbrace\)</span></p>
@@ -3658,7 +3656,7 @@ But, it seems that, when <span class="math notranslate nohighlight">\(h_3^{78}&l
 </section>
 </section>
 <section id="analysis-of-multiple-parameters">
-<h4><strong>Analysis of multiple parameters</strong><a class="headerlink" href="#analysis-of-multiple-parameters" title="Link to this heading">#</a></h4>
+<h3><strong>Analysis of multiple parameters</strong><a class="headerlink" href="#analysis-of-multiple-parameters" title="Link to this heading">#</a></h3>
 <p>In this section we make a sensitivity analysis of some of the parameters of the problem, following an multiple  approach, in the sense that we analyzed several parameters at once.</p>
 <p>This analysis is essentially carried out using the function <code class="docutils literal notranslate"><span class="pre">get_results1_multi</span></code> and <code class="docutils literal notranslate"><span class="pre">get_results2_multi</span></code>.</p>
 <div class="cell docutils container">
@@ -3789,8 +3787,7 @@ But, it seems that, when <span class="math notranslate nohighlight">\(h_3^{78}&l
 </div>
 </div>
 </div>
-<section id="analysis-of-h-3-12-h-3-34-h-3-56-h-3-78-h-3-910-combination-of-parameters">
-<h5><strong>Analysis of <span class="math notranslate nohighlight">\((h_3^{12}, h_3^{34}, h_3^{56}, h_3^{78}, h_3^{910})\)</span> combination of parameters</strong><a class="headerlink" href="#analysis-of-h-3-12-h-3-34-h-3-56-h-3-78-h-3-910-combination-of-parameters" title="Link to this heading">#</a></h5>
+<p><strong>Analysis of <span class="math notranslate nohighlight">\((h_3^{12}, h_3^{34}, h_3^{56}, h_3^{78}, h_3^{910})\)</span> combination of parameters</strong></p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(h_3 :=\)</span>  minimum time time spent in each patient, taking into account their severity/importance (this quantity depends on <span class="math notranslate nohighlight">\(w_j\)</span>).</p></li>
 </ul>
@@ -4544,8 +4541,6 @@ There are no differences depending on the combination.</p></li>
 </section>
 </section>
 </section>
-</section>
-</section>
 
     <script type="text/x-thebe-config">
     {
@@ -4620,32 +4615,29 @@ There are no differences depending on the combination.</p></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#constraints"><strong>Constraints</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-linear-problem"><strong>General linear problem</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solving-with-pyomo"><strong>Solving with <code class="docutils literal notranslate"><span class="pre">Pyomo</span></code></strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w"><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong></a></li>
 </ul>
 </li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-sensitivity"><strong>Analysis of sensitivity</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-individual-parameters"><strong>Analysis of individual parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-1-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-2-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong></a></li>
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#preliminary-analysis"><strong>Preliminary analysis</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#optimal-values"><strong>Optimal values</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#time-spent-in-patients"><strong>Time spent in patients</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#average-time-spent-per-patient"><strong>Average time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#max-time-spent-per-patient"><strong>Max time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#min-time-spent-per-patient"><strong>Min time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#median-of-time-spent-per-patient"><strong>Median of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-of-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(75\)</span>-quantile of time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#quantile-time-spent-per-patient"><strong><span class="math notranslate nohighlight">\(25\)</span>-quantile time spent per patient</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#number-of-patients-seen"><strong>Number of patients seen</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#relation-between-time-spent-per-patient-and-the-severity-importance-w"><strong>Relation between time spent per patient and the severity/importance <span class="math notranslate nohighlight">\((w)\)</span></strong></a></li>
 </ul>
 </li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-multiple-parameters"><strong>Analysis of multiple parameters</strong></a><ul class="nav section-nav flex-column">
-<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-12-h-3-34-h-3-56-h-3-78-h-3-910-combination-of-parameters"><strong>Analysis of <span class="math notranslate nohighlight">\((h_3^{12}, h_3^{34}, h_3^{56}, h_3^{78}, h_3^{910})\)</span> combination of parameters</strong></a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-sensitivity"><strong>Analysis of sensitivity</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-individual-parameters"><strong>Analysis of individual parameters</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-1-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_1\)</span> parameter</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-2-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_2\)</span> parameter</strong></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-h-3-parameter"><strong>Analysis of <span class="math notranslate nohighlight">\(h_3\)</span> parameter</strong></a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#analysis-of-multiple-parameters"><strong>Analysis of multiple parameters</strong></a></li>
 </ul>
 </li>
 </ul>
